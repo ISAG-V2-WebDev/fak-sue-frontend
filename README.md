@@ -1,2 +1,2 @@
-# webdev-project-frontend
-This is Frontend of Food Queueing Project.
+# fark-sue-frontend
+This is frontend of Fark Sue web application.
