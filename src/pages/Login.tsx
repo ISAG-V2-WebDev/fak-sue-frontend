@@ -1,11 +1,13 @@
 import avatar from '../assets/peeps-avatar-alpha.png'
+import crown from '../assets/75085ee4f1afdb32.png'
 import React from 'react'
 
 const login = () => {
     return (
         <div className="flex justify-center items-center h-full">
             <div className="flex flex-col bg-white shadow-md px-5 lg:flex-row mx-10 sm:mx-24 py-8 rounded-3xl w-full max-w-5xl">
-                <div className="max-w-md lg:max-w-lg self-center">
+                <div className="max-w-xs lg:max-w-lg self-center flex relative">
+                    <h1 className="absolute text-6xl font-bold">FAK <br /> SUE</h1>
                     <img src={avatar} alt="avatar" className="object-cover" />
                 </div>
                 <div className="flex-col w-full">
@@ -15,7 +17,7 @@ const login = () => {
                     <p className="text-center lg:text-start mt-2">
                         See what is going on with your business.
                     </p>
-                    <form action="#">
+                    <form action="#" className="flex flex-col space-y-5">
                         <div>
                             <label
                                 htmlFor="email"
@@ -28,6 +30,7 @@ const login = () => {
                                     name="email"
                                     type="email"
                                     autoComplete="email"
+                                    placeholder='abc@gmail.com'
                                     required
                                     className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400
                               focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
@@ -46,6 +49,7 @@ const login = () => {
                                     name="password"
                                     type="password"
                                     autoComplete="current-password"
+                                    placeholder='************'
                                     required
                                     className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400
                               focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
@@ -59,6 +63,7 @@ const login = () => {
                                     name="remember_me"
                                     type="checkbox"
                                     className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                                    checked
                                 />
                                 <label
                                     htmlFor="remember_me"
@@ -79,7 +84,7 @@ const login = () => {
                             <button
                                 type="submit"
                                 className="w-full flex justify-center py-2 px-4 border border-transparent
-                                              rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700
+                                              rounded-md shadow-sm text-sm font-medium text-white bg-[#68174a] hover:bg-blue-700
                                               focus:outline">
                                 Login
                             </button>
