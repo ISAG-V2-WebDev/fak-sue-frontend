@@ -1,2 +1,2 @@
-# fark-sue-frontend
-This is frontend of Fark Sue web application.
+# fak-sue-frontend
+This is frontend of Fak Sue web application.
