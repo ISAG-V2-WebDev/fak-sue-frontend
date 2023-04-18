@@ -1,14 +1,14 @@
 import avatar from '../assets/peeps-avatar-alpha.png'
-import crown from '../assets/75085ee4f1afdb32.png'
 import React from 'react'
 
 const login = () => {
     return (
-        <div className="flex justify-center items-center h-full">
+        <div className="flex justify-center items-center h-screen">
             <div className="flex flex-col bg-white shadow-md px-5 lg:flex-row mx-10 sm:mx-24 py-8 rounded-3xl w-full max-w-5xl">
                 <div className="max-w-xs lg:max-w-lg self-center flex relative">
-                    <h1 className="absolute text-6xl font-bold">FAK <br /> SUE</h1>
-                    <img src={avatar} alt="avatar" className="object-cover" />
+                    <h1 className="text-3xl absolute sm:text-4xl lg:text-6xl font-bold">FAK <br /> SUE</h1>
+                    <img src={avatar} alt="avatar" className="object-cover z-10" />
+                    <img src="" alt="" />
                 </div>
                 <div className="flex-col w-full">
                     <h1 className="text-2xl text-center font-medium sm:text-4xl text-slate-700 lg:text-start">
