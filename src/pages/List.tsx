@@ -1,5 +1,5 @@
 import Add from '../assets/add.png'
-import Label from '../components/label'
+import Label from '../components/Label'
 import { FormEvent, useState } from 'react'
 import exitBtn from '../assets/Delete-Red-X-Button-Transparent.png'
 
@@ -19,7 +19,7 @@ const List = () => {
             <div className="flex justify-center h-screen py-5">
                 <div className="flex relative overflow-y-auto gap-3 w-full max-w-2xl h-full rounded-2xl ">
                     <div className="flex flex-col gap-3 w-full absolute">
-                        <Label />
+                        <Label/>
                     </div>
                 </div>
             </div>

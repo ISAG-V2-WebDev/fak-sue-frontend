@@ -7,8 +7,8 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 const App = () => {
     return (
         <>
-            <div className="h-screen bg-[#f5e5b8] flex flex-col">
-                <div className="bg-[#b25013] h-fit px-5 py-2 font-bold text-white leading-tight text-3xl w-screen">
+            <div className="min-h-screen bg-[#f5e5b8] flex flex-col">
+                <div className="bg-[#b25013] h-fit px-5 py-2 font-bold text-white leading-tight text-3xl w-full">
                     FAK <br />
                     SUE
                 </div>
