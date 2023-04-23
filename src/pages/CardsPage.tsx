@@ -6,8 +6,13 @@ import { useState } from 'react'
 
 const CardsPage = () => {
     const [isFormVisible, setIsFormVisible] = useState(false)
+    const [isFakFormVisible, setIsFakFormVisible] = useState(true)
     const [restaurantName, setRestaurantName] = useState('')
     const [selectedTime, setSelectedTime] = useState('')
+
+    const changeFakFormVisibility = (visibility: boolean) => {
+        setIsFakFormVisible(visibility)
+    }
 
     return (
         <>
@@ -73,6 +78,8 @@ const CardsPage = () => {
                     </form>
                 </div>
             )}
+
+            {isFakFormVisible && (<FakForm changeFakFormVisibility={changeFakFormVisibility}/>)}
         </>
     )
 }
