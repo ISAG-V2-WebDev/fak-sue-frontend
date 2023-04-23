@@ -2,8 +2,8 @@ import React from 'react'
 
 const Register = () => {
     return (
-        <div className="flex flex-col justify-center items-center h-screen">
-            <div className="bg-white shadow-md px-5 lg:flex-row mx-10 sm:mx-24 py-8 rounded-3xl w-full max-w-3xl">
+        <div className="flex flex-col justify-center items-center h-fit">
+            <div className="bg-white shadow-md px-5 lg:flex-row mx-10 sm:mx-24 py-8 rounded-3xl w-full max-w-3xl mt-20">
                 <h1 className=" text-5xl font-bold mb-5">
                     FAK <br /> SUE
                 </h1>

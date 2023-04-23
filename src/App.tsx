@@ -2,6 +2,7 @@ import Home from './pages/Home'
 import Login from './pages/Login'
 import Register from './pages/Register'
 import List from './pages/List'
+import CardsPage from './pages/CardsPage'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
 const App = () => {
@@ -18,6 +19,7 @@ const App = () => {
                     <Route path="/home" element={<Home/> } />
                     <Route path="/register" element={<Register/> } />
                     <Route path="/list" element={<List/> } />
+                    <Route path="/cardspage" element={<CardsPage/> } />
                     </Routes>
                 </BrowserRouter>
             </div>
