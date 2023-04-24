@@ -3,8 +3,8 @@ import React from 'react'
 
 const login = () => {
     return (
-        <div className="flex justify-center items-center h-full">
-            <div className="flex flex-col bg-white shadow-md px-5 lg:flex-row mx-10 sm:mx-24 py-8 rounded-3xl w-full max-w-5xl my-5">
+        <div className="flex justify-center items-center h-full flex-1">
+            <div className="flex flex-col bg-white shadow-md px-5 lg:flex-row mx-10 sm:mx-24 py-8 rounded-3xl w-full max-w-5xl">
                 <div className="max-w-xs lg:max-w-lg self-center flex relative">
                     <h1 className="text-3xl absolute sm:text-4xl lg:text-6xl font-bold">FAK <br /> SUE</h1>
                     <img src={avatar} alt="avatar" className="object-cover z-10" />
