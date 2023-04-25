@@ -3,6 +3,9 @@ import Add from '../assets/add.png'
 import FakForm from '../components/FakForm'
 import RubFakForm from '../components/RubFakForm'
 import { useState } from 'react'
+import { CardProps } from '../components/Card'
+const cardDataFromLocalStorage = localStorage.getItem('cardData')
+const cardData = cardDataFromLocalStorage ? JSON.parse(cardDataFromLocalStorage) : [];
 
 const CardsPage = () => {
     const [isRubFakFormVisible, setIsRubFakFormVisible] = useState(false)
@@ -16,20 +19,22 @@ const CardsPage = () => {
         setIsRubFakFormVisible(visibility)
     }
 
+    const cards = cardData.map((card : CardProps, index : number) => (
+        <Card
+          changeFakFormVisibility={changeFakFormVisibility}
+          key={index}
+          restaurantName={card.restaurantName}
+          time={card.time}
+          description={card.description}
+          username={card.username}
+        />
+      ));
+      
+
     return (
         <>
             <div className="m-3.5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-                <Card changeFakFormVisibility={changeFakFormVisibility}/>
-                <Card changeFakFormVisibility={changeFakFormVisibility}/>
-                <Card changeFakFormVisibility={changeFakFormVisibility}/>
-                <Card changeFakFormVisibility={changeFakFormVisibility}/>
-                <Card changeFakFormVisibility={changeFakFormVisibility}/>
-                <Card changeFakFormVisibility={changeFakFormVisibility}/>
-                <Card changeFakFormVisibility={changeFakFormVisibility}/>
-                <Card changeFakFormVisibility={changeFakFormVisibility}/>
-                <Card changeFakFormVisibility={changeFakFormVisibility}/>
-                <Card changeFakFormVisibility={changeFakFormVisibility}/>
-
+                {cards}
             </div>
             <div className="fixed max-w-[5rem] bottom-10 right-10 hover:-translate-y-2 transition-transform cursor-pointer z-40">
                 <img src={Add} alt="addBtn" onClick={() => {setIsRubFakFormVisible(true)}}/>

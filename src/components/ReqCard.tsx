@@ -1,22 +1,15 @@
 import user from '../assets/user.png'
 
-export type CardProps = {
-    changeFakFormVisibility: (visible: boolean) => void;
-    restaurantName: string;
-    time: string;
-    description: string;
+export type ReqCardProps = {
     username: string;
+    menuName: string;
+    quantity: number;
+    moreInfo: string;  
 };
 
-const Card = ({
-    changeFakFormVisibility,
-    restaurantName,
-    time,
-    description,
-    username,
-  }: CardProps) => {
-    return (
-        <div className="relative bg-white rounded-3xl shadow-md overflow-hidden">
+const ReqCard = ({username, menuName, quantity, moreInfo}: ReqCardProps) => {
+  return (
+    <div className="relative bg-white rounded-3xl shadow-md overflow-hidden">
             <div className="absolute top-0 left-0 w-full h-1/3">
                 <div className="bg-black absolute opacity-50 h-full w-full"></div>
                 <img
@@ -39,24 +32,24 @@ const Card = ({
                             {username}
                         </div>
                         <div className="text-white overflow-hidden text-ellipsis w-full">
-                            ร้านค้า : {restaurantName}
+                            เมนู : {menuName}
                         </div>
-                        <div className="text-white">Time : {time}</div>
+                        <div className="text-white">จำนวน : {quantity}</div>
                     </div>
                 </div>
                 <div className="h-32 bg-slate-100 rounded-md mt-2 overflow-auto p-2">
                     <p className="text-black">
-                        {description}
+                        {moreInfo}
                     </p>
                 </div>
                 <div className="flex justify-center">
-                    <button className="bg-orange-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg mt-2" onClick={() => changeFakFormVisibility(true)}>
-                        ฝากซื้อ
+                    <button className="bg-orange-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg mt-2">
+                        ok
                     </button>
                 </div>
             </div>
         </div>
-    )
+  )
 }
 
-export default Card
+export default ReqCard

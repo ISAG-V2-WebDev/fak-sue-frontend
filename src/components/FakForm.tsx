@@ -1,4 +1,5 @@
 import ExitBtn from '../assets/Delete-Red-X-Button-Transparent.png'
+import ReqCardData from '../data/reqCardData'
 import { useState } from 'react'
 
 type FakFormProps = {
@@ -7,15 +8,41 @@ type FakFormProps = {
 
 const FakForm = ({ changeFakFormVisibility }: FakFormProps) => {
     const [menuName, setMenuName] = useState('')
-    const [quantity, setQuantity] = useState('0')
+    const [quantity, setQuantity] = useState(0)
     const [moreInfo, setMoreInfo] = useState('')
+
+    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault()
+
+        // Save the submitted data to localStorage
+        const newData = {
+            username: 'guest',
+            menuName,
+            quantity,
+            moreInfo
+        }
+        const existingData = JSON.parse(
+            localStorage.getItem('reqCardData') || '[]'
+        )
+        localStorage.setItem(
+            'reqCardData',
+            JSON.stringify([...existingData, newData])
+        )
+
+        // Hide the RubFakForm component
+        changeFakFormVisibility(false)
+
+        // Reset the form inputs
+        setMenuName('')
+        setQuantity(0)
+        setMoreInfo('')
+    }
 
     return (
         <div className="flex fixed bg-black bg-opacity-70 w-full min-h-screen justify-center z-50">
             <form
                 className="relative p-10 self-center flex flex-col gap-2 bg-[#d9d9d9] max-w-2xl w-full rounded-2xl mx-5"
-                /*onSubmit={handleFormSubmit}*/
-            >
+                onSubmit={handleSubmit}>
                 <div className="bg-green-500 text-center h-fit w-fit p-4 absolute font-kanit font-bold text-4xl text-white text rounded-full -top-8 left-1/3 shadow-md">
                     ฝากซื้ออะไร?
                 </div>
@@ -49,7 +76,7 @@ const FakForm = ({ changeFakFormVisibility }: FakFormProps) => {
                             id="quantity"
                             value={quantity}
                             onChange={(event) => {
-                                setQuantity(event.target.value)
+                                setQuantity(parseInt(event.target.value))
                             }}
                             min={0}
                             required
