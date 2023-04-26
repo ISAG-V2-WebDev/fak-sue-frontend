@@ -6,6 +6,7 @@ export type CardProps = {
     time: string;
     description: string;
     username: string;
+    maxQuantity: number
 };
 
 const Card = ({
@@ -14,7 +15,13 @@ const Card = ({
     time,
     description,
     username,
+    maxQuantity,
   }: CardProps) => {
+    const reqCardDataFromLocalStorage = localStorage.getItem('reqCardData')
+    const reqCardData = reqCardDataFromLocalStorage
+        ? JSON.parse(reqCardDataFromLocalStorage)
+        : []
+
     return (
         <div className="relative bg-white rounded-3xl shadow-md overflow-hidden">
             <div className="absolute top-0 left-0 w-full h-1/3">
@@ -34,7 +41,7 @@ const Card = ({
                             className="rounded-full border-2 border-white"
                         />
                     </div>
-                    <div className="grid grid-rows-3 ml-4">
+                    <div className="flex-1 grid grid-rows-3 ml-4">
                         <div className="font-bold text-white overflow-hidden text-ellipsis w-full">
                             {username}
                         </div>
@@ -43,6 +50,7 @@ const Card = ({
                         </div>
                         <div className="text-white">Time : {time}</div>
                     </div>
+                    <div className="text-white font-kanit px-5 bg-pink-500 h-fit rounded-full">{reqCardData.length} / {maxQuantity}</div>
                 </div>
                 <div className="h-32 bg-slate-100 rounded-md mt-2 overflow-auto p-2">
                     <p className="text-black">

@@ -10,29 +10,36 @@ const RubFakForm = ({ changeRubFakFormVisibility }: RubFakFormProps) => {
     const [restaurantName, setRestaurantName] = useState('')
     const [time, setSelectedTime] = useState('')
     const [description, setDescription] = useState('')
+    const [maxQuantity, setMaxQuantity] = useState(0)
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-      
+        event.preventDefault()
+
         // Save the submitted data to localStorage
         const newData = {
-          username: 'guest',
-          restaurantName,
-          time,
-          description,
-        };
-        const existingData = JSON.parse(localStorage.getItem('cardData') || '[]');
-        localStorage.setItem('cardData', JSON.stringify([...existingData, newData]));
-      
+            username: 'guest',
+            restaurantName,
+            time,
+            description,
+            maxQuantity
+        }
+        const existingData = JSON.parse(
+            localStorage.getItem('cardData') || '[]'
+        )
+        localStorage.setItem(
+            'cardData',
+            JSON.stringify([...existingData, newData])
+        )
+
         // Hide the RubFakForm component
-        changeRubFakFormVisibility(false);
-      
+        changeRubFakFormVisibility(false)
+
         // Reset the form inputs
-        setRestaurantName('');
-        setSelectedTime('');
-        setDescription('');
-      };      
-    
+        setRestaurantName('')
+        setSelectedTime('')
+        setDescription('')
+        setMaxQuantity(0)
+    }
 
     return (
         <div className="flex fixed bg-black bg-opacity-70 w-full min-h-screen justify-center z-50">
@@ -57,23 +64,48 @@ const RubFakForm = ({ changeRubFakFormVisibility }: RubFakFormProps) => {
                   focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm col-span-3"
                 />
 
-                <label
-                    htmlFor="selectedTime"
-                    className="font-kanit font-medium">
-                    เวลา
-                </label>
-                <select
-                    id="time"
-                    value={time}
-                    onChange={(event) => setSelectedTime(event.target.value)}
-                    required
-                    className=" block w-full px-3 py-2 border border-gray-300 rounded-full shadow-sm placeholder-gray-400
-                  focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm col-span-3">
-                    <option value="">Select Time</option>
-                    <option value="morning">Morning</option>
-                    <option value="afternoon">Afternoon</option>
-                    <option value="evening">Evening</option>
-                </select>
+                <div className="grid grid-cols-8 gap-3">
+                    <div className="col-span-4">
+                        <label
+                            htmlFor="selectedTime"
+                            className="font-kanit font-medium">
+                            เวลา
+                        </label>
+                        <select
+                            id="time"
+                            value={time}
+                            onChange={(event) =>
+                                setSelectedTime(event.target.value)
+                            }
+                            required
+                            className=" block w-full px-3 py-2 border border-gray-300 rounded-full shadow-sm placeholder-gray-400
+                        focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                            <option value="">Select Time</option>
+                            <option value="morning">Morning</option>
+                            <option value="afternoon">Afternoon</option>
+                            <option value="evening">Evening</option>
+                        </select>
+                    </div>
+
+                    <div className="col-end-9 col-span-3">
+                        <label
+                            htmlFor="maxQuantity"
+                            className="font-kanit font-medium ">
+                            จำนวนรับสูงสุด
+                        </label>
+                        <input
+                            type="number"
+                            id="maxQuantity"
+                            value={maxQuantity}
+                            onChange={(event) => {
+                                setMaxQuantity(parseInt(event.target.value))
+                            }}
+                            min={0}
+                            required
+                            className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-full shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                        />
+                    </div>
+                </div>
 
                 <label htmlFor="description" className="font-kanit font-medium">
                     รายละเอียดเพิ่มเติม

@@ -36,6 +36,7 @@ const CardsPage = () => {
             time={card.time}
             description={card.description}
             username={card.username}
+            maxQuantity={card.maxQuantity}
         />
     ))
 
@@ -45,6 +46,7 @@ const CardsPage = () => {
                 <Link to="/yourreq">
                     <div className="absolute max-w-[50px] right-20 top-5 w-full cursor-pointer hover:-translate-y-1 transition-transform">
                         <img src={bell} alt="#" />
+                        <span className="text-white font-kanit font-bold absolute bg-red-700 w-[25px] rounded-full text-center top-1">{reqCardData.length}</span>
                     </div>
                 </Link>
             )}
