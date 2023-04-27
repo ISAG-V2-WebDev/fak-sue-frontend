@@ -99,9 +99,9 @@ const FakForm = ({ changeFakFormVisibility, orderFull }: FakFormProps) => {
 
                 <button
                     type="submit"
-                    className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full"
+                    className={` hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full ${orderFull ? 'bg-red-700 hover:bg-red-500' : 'bg-green-500'}`}
                     disabled={orderFull}>
-                    Submit
+                    {orderFull ? "Order Full" : "Submit"}
                 </button>
 
                 <div className="max-w-[50px] absolute -top-6 -right-6 cursor-pointer">
