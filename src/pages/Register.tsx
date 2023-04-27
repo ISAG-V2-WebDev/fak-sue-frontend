@@ -75,7 +75,7 @@ const Register = () => {
                     <button
                         type="submit"
                         className="w-1/2 flex justify-center py-2 px-4 border border-transparent
-                                              rounded-md shadow-sm text-sm font-medium text-white bg-[#68174a] hover:bg-blue-700
+                                              rounded-full shadow-sm text-sm font-medium text-white bg-[#68174a] hover:bg-blue-700
                                               focus:outline self-center mt-10">
                         Submit
                     </button>

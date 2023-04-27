@@ -4,9 +4,10 @@ import { useState } from 'react'
 
 type FakFormProps = {
     changeFakFormVisibility: (visible: boolean) => void
+    orderFull: boolean
 }
 
-const FakForm = ({ changeFakFormVisibility }: FakFormProps) => {
+const FakForm = ({ changeFakFormVisibility, orderFull }: FakFormProps) => {
     const [menuName, setMenuName] = useState('')
     const [quantity, setQuantity] = useState(0)
     const [moreInfo, setMoreInfo] = useState('')
@@ -98,7 +99,8 @@ const FakForm = ({ changeFakFormVisibility }: FakFormProps) => {
 
                 <button
                     type="submit"
-                    className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full">
+                    className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full"
+                    disabled={orderFull}>
                     Submit
                 </button>
 

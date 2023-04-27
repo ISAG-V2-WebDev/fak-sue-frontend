@@ -1,6 +1,7 @@
 import user from '../assets/user.png'
 
 export type CardProps = {
+    isOrderFull: (allow:boolean) => void
     changeFakFormVisibility: (visible: boolean) => void;
     restaurantName: string;
     time: string;
@@ -10,6 +11,7 @@ export type CardProps = {
 };
 
 const Card = ({
+    isOrderFull,
     changeFakFormVisibility,
     restaurantName,
     time,
@@ -21,6 +23,10 @@ const Card = ({
     const reqCardData = reqCardDataFromLocalStorage
         ? JSON.parse(reqCardDataFromLocalStorage)
         : []
+
+    if (reqCardData.length >= maxQuantity) {
+        isOrderFull(true)
+    }
 
     return (
         <div className="relative bg-white rounded-3xl shadow-md overflow-hidden">
