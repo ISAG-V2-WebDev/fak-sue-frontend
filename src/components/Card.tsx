@@ -4,6 +4,7 @@ import cardWallpaper from '../assets/food-wallpaper.jpg'
 export type CardProps = {
     isOrderFull: (allow: boolean) => void
     changeFakFormVisibility: (visible: boolean) => void
+    key: number
     restaurantName: string
     time: string
     description: string
@@ -14,6 +15,7 @@ export type CardProps = {
 const Card = ({
     isOrderFull,
     changeFakFormVisibility,
+    key,
     restaurantName,
     time,
     description,
@@ -25,8 +27,10 @@ const Card = ({
         ? JSON.parse(reqCardDataFromLocalStorage)
         : []
 
+    const totalQuantity = reqCardData.reduce((acc : number, curr: {quantity : number} ) => acc + curr.quantity, 0)
+
     const changeIsOrderFull = () => {
-        if (reqCardData.length >= maxQuantity) {
+        if (totalQuantity >= maxQuantity) {
             isOrderFull(true)
         } else {
             isOrderFull(false)
@@ -62,7 +66,7 @@ const Card = ({
                         <div className="text-white">Time : {time}</div>
                     </div>
                     <div className="text-white font-kanit px-5 bg-pink-500 h-fit rounded-full">
-                        {reqCardData.length} / {maxQuantity}
+                        {totalQuantity} / {maxQuantity}
                     </div>
                 </div>
                 <div className="h-32 bg-slate-100 rounded-md mt-2 overflow-auto p-2">
