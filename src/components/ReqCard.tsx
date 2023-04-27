@@ -1,4 +1,5 @@
 import user from '../assets/user.png'
+import cardWallpaper from '../assets/food-wallpaper.jpg'
 
 export type ReqCardProps = {
     username: string;
@@ -13,8 +14,8 @@ const ReqCard = ({username, menuName, quantity, moreInfo}: ReqCardProps) => {
             <div className="absolute top-0 left-0 w-full h-1/3">
                 <div className="bg-black absolute opacity-50 h-full w-full"></div>
                 <img
-                    className="h-full w-full object-cover"
-                    src="https://unsplash.com/photos/h0Vxgz5tyXA/download?force=true&w=640"
+                    className="h-full w-full object-cover object-top"
+                    src={cardWallpaper}
                     alt=""
                 />
             </div>
