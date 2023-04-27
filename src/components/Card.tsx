@@ -2,6 +2,7 @@ import user from '../assets/user.png'
 import cardWallpaper from '../assets/food-wallpaper.jpg'
 
 export type CardProps = {
+    remainOfQuantity: (rest: number) => void
     getIndexOfCard: (index: number) => void
     isOrderFull: (allow: boolean) => void
     changeFakFormVisibility: (visible: boolean) => void
@@ -14,6 +15,7 @@ export type CardProps = {
 }
 
 const Card = ({
+    remainOfQuantity,
     getIndexOfCard,
     isOrderFull,
     changeFakFormVisibility,
@@ -87,6 +89,7 @@ const Card = ({
                             changeFakFormVisibility(true)
                             changeIsOrderFull()
                             getIndexOfCard(index)
+                            remainOfQuantity(maxQuantity - totalQuantity)
                         }}>
                         ฝากซื้อ
                     </button>

@@ -21,6 +21,7 @@ const CardsPage = () => {
     const [isFakFormVisible, setIsFakFormVisible] = useState(false)
     const [orderFull, setOrderFull] = useState(false)
     const [indexOfCard, setIndexOfCard] = useState(0)
+    const [remain, setRemain] = useState(0)
 
     const getIndexOfCard = (index: number) => {
         setIndexOfCard(index)
@@ -38,9 +39,14 @@ const CardsPage = () => {
         setOrderFull(allow)
     }
 
+    const remainOfQuantity = (rest: number) => {
+        setRemain(rest)
+    }
+
     const cards = cardData.map((card: CardProps, index: number) => (
         <Card
             key={index}
+            remainOfQuantity={remainOfQuantity}
             getIndexOfCard={getIndexOfCard}
             isOrderFull={isOrderFull}
             changeFakFormVisibility={changeFakFormVisibility}
@@ -84,7 +90,7 @@ const CardsPage = () => {
             )}
 
             {isFakFormVisible && (
-                <FakForm changeFakFormVisibility={changeFakFormVisibility} orderFull={orderFull} indexOfCard={indexOfCard}/>
+                <FakForm changeFakFormVisibility={changeFakFormVisibility} orderFull={orderFull} indexOfCard={indexOfCard} remain={remain}/>
             )}
         </>
     )
