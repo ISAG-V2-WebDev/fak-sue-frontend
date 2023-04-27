@@ -1,15 +1,15 @@
 import ExitBtn from '../assets/Delete-Red-X-Button-Transparent.png'
-import ReqCardData from '../data/reqCardData'
 import { useState } from 'react'
 
 type FakFormProps = {
     changeFakFormVisibility: (visible: boolean) => void
     orderFull: boolean
+    indexOfCard: number
 }
 
-const FakForm = ({ changeFakFormVisibility, orderFull }: FakFormProps) => {
+const FakForm = ({ changeFakFormVisibility, orderFull, indexOfCard }: FakFormProps) => {
     const [menuName, setMenuName] = useState('')
-    const [quantity, setQuantity] = useState(0)
+    const [quantity, setQuantity] = useState(1)
     const [moreInfo, setMoreInfo] = useState('')
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -17,6 +17,7 @@ const FakForm = ({ changeFakFormVisibility, orderFull }: FakFormProps) => {
 
         // Save the submitted data to localStorage
         const newData = {
+            indexOfCard,
             username: 'guest',
             menuName,
             quantity,
@@ -79,7 +80,7 @@ const FakForm = ({ changeFakFormVisibility, orderFull }: FakFormProps) => {
                             onChange={(event) => {
                                 setQuantity(parseInt(event.target.value))
                             }}
-                            min={0}
+                            min={1}
                             required
                             className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-full shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                         />

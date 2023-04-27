@@ -20,6 +20,11 @@ const CardsPage = () => {
     const [isRubFakFormVisible, setIsRubFakFormVisible] = useState(false)
     const [isFakFormVisible, setIsFakFormVisible] = useState(false)
     const [orderFull, setOrderFull] = useState(false)
+    const [indexOfCard, setIndexOfCard] = useState(0)
+
+    const getIndexOfCard = (index: number) => {
+        setIndexOfCard(index)
+    }
 
     const changeFakFormVisibility = (visibility: boolean) => {
         setIsFakFormVisible(visibility)
@@ -35,9 +40,11 @@ const CardsPage = () => {
 
     const cards = cardData.map((card: CardProps, index: number) => (
         <Card
+            key={index}
+            getIndexOfCard={getIndexOfCard}
             isOrderFull={isOrderFull}
             changeFakFormVisibility={changeFakFormVisibility}
-            key={index}
+            index={index}
             restaurantName={card.restaurantName}
             time={card.time}
             description={card.description}
@@ -77,7 +84,7 @@ const CardsPage = () => {
             )}
 
             {isFakFormVisible && (
-                <FakForm changeFakFormVisibility={changeFakFormVisibility} orderFull={orderFull} />
+                <FakForm changeFakFormVisibility={changeFakFormVisibility} orderFull={orderFull} indexOfCard={indexOfCard}/>
             )}
         </>
     )

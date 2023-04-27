@@ -2,9 +2,10 @@ import user from '../assets/user.png'
 import cardWallpaper from '../assets/food-wallpaper.jpg'
 
 export type CardProps = {
+    getIndexOfCard: (index: number) => void
     isOrderFull: (allow: boolean) => void
     changeFakFormVisibility: (visible: boolean) => void
-    key: number
+    index: number
     restaurantName: string
     time: string
     description: string
@@ -13,9 +14,10 @@ export type CardProps = {
 }
 
 const Card = ({
+    getIndexOfCard,
     isOrderFull,
     changeFakFormVisibility,
-    key,
+    index,
     restaurantName,
     time,
     description,
@@ -27,7 +29,13 @@ const Card = ({
         ? JSON.parse(reqCardDataFromLocalStorage)
         : []
 
-    const totalQuantity = reqCardData.reduce((acc : number, curr: {quantity : number} ) => acc + curr.quantity, 0)
+    // const totalQuantity = reqCardData.reduce((acc : number, curr: {quantity : number} ) => acc + curr.quantity, 0)
+    const totalQuantity = reqCardData.reduce((acc: number, curr:{indexOfCard: number , quantity: number}) => {
+        if (curr.indexOfCard === index) {
+            return acc + curr.quantity
+        }
+        return acc
+    }, 0)
 
     const changeIsOrderFull = () => {
         if (totalQuantity >= maxQuantity) {
@@ -78,6 +86,7 @@ const Card = ({
                         onClick={() => {
                             changeFakFormVisibility(true)
                             changeIsOrderFull()
+                            getIndexOfCard(index)
                         }}>
                         ฝากซื้อ
                     </button>
