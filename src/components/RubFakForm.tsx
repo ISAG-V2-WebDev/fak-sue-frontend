@@ -46,7 +46,7 @@ const RubFakForm = ({ changeRubFakFormVisibility }: RubFakFormProps) => {
             <form
                 className="relative p-10 self-center flex flex-col gap-3 bg-[#d9d9d9] max-w-2xl w-full rounded-2xl mx-5"
                 onSubmit={handleSubmit}>
-                <div className="bg-green-500 text-center h-fit w-fit p-4 absolute font-kanit font-bold text-4xl text-white text rounded-full -top-8 left-1/3 shadow-md">
+                <div className="text-2xl bg-green-500 text-center h-fit w-fit p-4 absolute font-kanit font-bold sm:text-4xl text-white text rounded-full -top-8 left-1/2 transform -translate-x-1/2 shadow-md">
                     รับฝากซื้อจ้า
                 </div>
                 <label
