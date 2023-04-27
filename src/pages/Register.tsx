@@ -9,7 +9,39 @@ const Register = () => {
                 </h1>
                 <form action="#" className="flex flex-col">
                     <div className="grid gap-y-2 sm:grid-cols-4 sm:gap-y-10 sm:gap-x-4 max-w-4xl sm:mx-20 items-center">
-                        <label htmlFor="studentId" className="font-bold">
+                        <label
+                            htmlFor="email"
+                            className="block text-md font-extrabold text-black font-kanit">
+                            Email
+                        </label>
+                        <input
+                            id="email"
+                            name="email"
+                            type="email"
+                            autoComplete="email"
+                            placeholder="abc@gmail.com"
+                            required
+                            className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400
+                              focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm col-span-3"
+                        />
+
+                        <label
+                            htmlFor="password"
+                            className="block text-md font-extrabold text-black font-kanit">
+                            Password
+                        </label>
+                            <input
+                                id="password"
+                                name="password"
+                                type="password"
+                                autoComplete="current-password"
+                                placeholder="************"
+                                required
+                                className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400
+                              focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm col-span-3"
+                            />
+
+                        <label htmlFor="studentId" className="block text-md font-extrabold text-black font-kanit">
                             รหัสนักศึกษา
                         </label>
                         <input
@@ -19,7 +51,7 @@ const Register = () => {
                             className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400
                               focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm col-span-3"
                         />
-                        <label htmlFor="fname" className="font-bold">
+                        <label htmlFor="fname" className="block text-md font-extrabold text-black font-kanit">
                             ชื่อ
                         </label>
                         <input
@@ -29,7 +61,7 @@ const Register = () => {
                             className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400
                               focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm col-span-3"
                         />
-                        <label htmlFor="lname" className="font-bold">
+                        <label htmlFor="lname" className="block text-md font-extrabold text-black font-kanit">
                             นามสกุล
                         </label>
                         <input
