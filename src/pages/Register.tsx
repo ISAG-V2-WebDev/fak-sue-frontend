@@ -52,21 +52,11 @@ const Register = () => {
                               focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm col-span-3"
                         />
                         <label htmlFor="fname" className="block text-md font-extrabold text-black font-kanit">
-                            ชื่อ
+                            ชื่อ-นามสกุล
                         </label>
                         <input
-                            id="fname"
-                            name="fname"
-                            type="text"
-                            className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400
-                              focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm col-span-3"
-                        />
-                        <label htmlFor="lname" className="block text-md font-extrabold text-black font-kanit">
-                            นามสกุล
-                        </label>
-                        <input
-                            id="lname"
-                            name="lname"
+                            id="name"
+                            name="name"
                             type="text"
                             className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400
                               focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm col-span-3"
