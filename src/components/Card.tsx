@@ -1,7 +1,9 @@
 import user from '../assets/user.png'
 import cardWallpaper from '../assets/food-wallpaper.jpg'
+import { cardInfoProps } from './FakForm'
 
 export type CardProps = {
+    getCardInfo: (info: cardInfoProps) => void
     remainOfQuantity: (rest: number) => void
     getIndexOfCard: (index: number) => void
     isOrderFull: (allow: boolean) => void
@@ -15,6 +17,7 @@ export type CardProps = {
 }
 
 const Card = ({
+    getCardInfo,
     remainOfQuantity,
     getIndexOfCard,
     isOrderFull,
@@ -67,13 +70,13 @@ const Card = ({
                         />
                     </div>
                     <div className="flex-1 grid grid-rows-3 ml-4">
-                        <div className="font-bold text-white overflow-hidden text-ellipsis w-full">
+                        <div className="font-bold text-white overflow-hidden text-ellipsis w-full font-kanit">
                             {username}
                         </div>
-                        <div className="text-white overflow-hidden text-ellipsis w-full">
+                        <div className="text-white overflow-hidden text-ellipsis w-full font-kanit">
                             ร้านค้า : {restaurantName}
                         </div>
-                        <div className="text-white">Time : {time}</div>
+                        <div className="text-white font-kanit">Deadline : {time}</div>
                     </div>
                     <div className="text-white font-kanit px-5 bg-pink-500 h-fit rounded-full">
                         {totalQuantity} / {maxQuantity}
@@ -90,6 +93,7 @@ const Card = ({
                             changeIsOrderFull()
                             getIndexOfCard(index)
                             remainOfQuantity(maxQuantity - totalQuantity)
+                            getCardInfo({username, restaurantName, time})
                         }}>
                         ฝากซื้อ
                     </button>

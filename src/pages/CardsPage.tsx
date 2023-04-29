@@ -6,6 +6,7 @@ import FakForm from '../components/FakForm'
 import RubFakForm from '../components/RubFakForm'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { cardInfoProps } from '../components/FakForm'
 
 const CardsPage = () => {
     const reqCardDataFromLocalStorage = localStorage.getItem('reqCardData')
@@ -22,6 +23,7 @@ const CardsPage = () => {
     const [orderFull, setOrderFull] = useState(false)
     const [indexOfCard, setIndexOfCard] = useState(0)
     const [remain, setRemain] = useState(0)
+    const [cardInfo, setCardInfo] = useState<cardInfoProps>()
 
     const getIndexOfCard = (index: number) => {
         setIndexOfCard(index)
@@ -43,9 +45,14 @@ const CardsPage = () => {
         setRemain(rest)
     }
 
+    const getCardInfo = (info: cardInfoProps) => {
+        setCardInfo(info)
+    }
+
     const cards = cardData.map((card: CardProps, index: number) => (
         <Card
             key={index}
+            getCardInfo={getCardInfo}
             remainOfQuantity={remainOfQuantity}
             getIndexOfCard={getIndexOfCard}
             isOrderFull={isOrderFull}
@@ -90,7 +97,7 @@ const CardsPage = () => {
             )}
 
             {isFakFormVisible && (
-                <FakForm changeFakFormVisibility={changeFakFormVisibility} orderFull={orderFull} indexOfCard={indexOfCard} remain={remain}/>
+                <FakForm changeFakFormVisibility={changeFakFormVisibility} orderFull={orderFull} indexOfCard={indexOfCard} remain={remain} cardInfo={cardInfo}/>
             )}
         </>
     )

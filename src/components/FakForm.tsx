@@ -1,14 +1,29 @@
 import ExitBtn from '../assets/Delete-Red-X-Button-Transparent.png'
+import cardWallpaper from '../assets/food-wallpaper.jpg'
+import user from '../assets/user.png'
 import { useState } from 'react'
+
+export type cardInfoProps = {
+    username: string
+    restaurantName: string
+    time: string
+}
 
 type FakFormProps = {
     changeFakFormVisibility: (visible: boolean) => void
     orderFull: boolean
     indexOfCard: number
     remain: number
+    cardInfo?: cardInfoProps
 }
 
-const FakForm = ({ changeFakFormVisibility, orderFull, indexOfCard, remain }: FakFormProps) => {
+const FakForm = ({
+    changeFakFormVisibility,
+    orderFull,
+    indexOfCard,
+    remain,
+    cardInfo
+}: FakFormProps) => {
     const [menuName, setMenuName] = useState('')
     const [quantity, setQuantity] = useState(1)
     const [moreInfo, setMoreInfo] = useState('')
@@ -46,9 +61,38 @@ const FakForm = ({ changeFakFormVisibility, orderFull, indexOfCard, remain }: Fa
             <form
                 className="relative p-10 self-center flex flex-col gap-2 bg-[#d9d9d9] max-w-2xl w-full rounded-2xl mx-5"
                 onSubmit={handleSubmit}>
-                <div className="text-3xl bg-green-500 text-center h-fit w-fit p-4 absolute font-kanit font-bold sm:text-4xl text-white text rounded-full -top-8 left-1/2 transform -translate-x-1/2 shadow-md">
+                <div className="text-3xl bg-green-500 text-center h-fit w-fit p-4 absolute font-kanit font-bold sm:text-4xl z-50 text-white text rounded-full -top-8 left-1/2 transform -translate-x-1/2 shadow-md">
                     ฝากซื้ออะไร?
                 </div>
+                <div className="flex mb-10">
+                    <div className="absolute top-0 left-0 w-full h-2/5 z-0 rounded-2xl shadow-md">
+                        <div className="bg-black absolute opacity-50 h-full w-full overflow-hidden rounded-2xl"></div>
+                        <img
+                            className="h-full w-full object-top object-cover overflow-hidden rounded-2xl"
+                            src={cardWallpaper}
+                            alt="#"
+                        />
+                    </div>
+                    <div className="max-w-[80px] z-10">
+                        <img
+                            src={user}
+                            alt="user"
+                            className="rounded-full border-2 border-white"
+                        />
+                    </div>
+                    <div className="flex-1 grid grid-rows-3 ml-4 z-10">
+                        <div className="font-bold text-white overflow-hidden text-ellipsis w-full font-kanit">
+                            {cardInfo?.username}
+                        </div>
+                        <div className="text-white overflow-hidden text-ellipsis w-full font-kanit">
+                            ร้านค้า : {cardInfo?.restaurantName}
+                        </div>
+                        <div className="text-white font-kanit">
+                            Deadline : {cardInfo?.time}
+                        </div>
+                    </div>
+                </div>
+
                 <div className="grid grid-cols-4 gap-3">
                     <div className="col-span-3">
                         <label
@@ -102,9 +146,13 @@ const FakForm = ({ changeFakFormVisibility, orderFull, indexOfCard, remain }: Fa
 
                 <button
                     type="submit"
-                    className={` hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full ${orderFull ? 'bg-red-700 hover:bg-red-500' : 'bg-green-500'}`}
+                    className={` hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full ${
+                        orderFull
+                            ? 'bg-red-700 hover:bg-red-500'
+                            : 'bg-green-500'
+                    }`}
                     disabled={orderFull}>
-                    {orderFull ? "Order Full" : "Submit"}
+                    {orderFull ? 'Order Full' : 'Submit'}
                 </button>
 
                 <div className="max-w-[50px] absolute -top-6 -right-6 cursor-pointer">

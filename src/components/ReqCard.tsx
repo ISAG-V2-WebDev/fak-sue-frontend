@@ -29,25 +29,21 @@ const ReqCard = ({username, menuName, quantity, moreInfo}: ReqCardProps) => {
                         />
                     </div>
                     <div className="grid grid-rows-3 ml-4">
-                        <div className="font-bold text-white overflow-hidden text-ellipsis w-full">
+                        <div className="font-bold text-white overflow-hidden text-ellipsis w-full font-kanit">
                             {username}
                         </div>
-                        <div className="text-white overflow-hidden text-ellipsis w-full">
+                        <div className="text-white overflow-hidden text-ellipsis w-full font-kanit">
                             เมนู : {menuName}
                         </div>
-                        <div className="text-white">จำนวน : {quantity}</div>
+                        <div className="text-white font-kanit">จำนวน : {quantity}</div>
                     </div>
                 </div>
-                <div className="h-32 bg-slate-100 rounded-md mt-2 overflow-auto p-2">
+                <div className="h-44 bg-slate-100 rounded-3xl mt-2 overflow-auto p-2">
                     <p className="text-black">
                         {moreInfo}
                     </p>
                 </div>
-                <div className="flex justify-center">
-                    <button className="bg-orange-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg mt-2">
-                        ok
-                    </button>
-                </div>
+
             </div>
         </div>
   )
