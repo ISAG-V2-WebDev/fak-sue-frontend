@@ -1,13 +1,13 @@
-import home from '../assets/white-home-icon-png-21.jpg'
-import ReqCard from '../components/ReqCard'
-import { ReqCardProps } from '../components/ReqCard'
-import { Link } from 'react-router-dom'
+import home from '../assets/white-home-icon-png-21.jpg';
+import ReqCard from '../components/ReqCard';
+import { ReqCardProps } from '../components/ReqCard';
+import { Link } from 'react-router-dom';
 
 const YourReq = () => {
-    const reqCardDataFromLocalStorage = localStorage.getItem('reqCardData')
+    const reqCardDataFromLocalStorage = localStorage.getItem('reqCardData');
     const reqCardData = reqCardDataFromLocalStorage
         ? JSON.parse(reqCardDataFromLocalStorage)
-        : []
+        : [];
     const reqCards = reqCardData.map((card: ReqCardProps, index: number) => (
         <ReqCard
             key={index}
@@ -16,7 +16,7 @@ const YourReq = () => {
             quantity={card.quantity}
             moreInfo={card.moreInfo}
         />
-    ))
+    ));
 
     return (
         <div>
@@ -29,7 +29,7 @@ const YourReq = () => {
                 {reqCards}
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default YourReq
+export default YourReq;

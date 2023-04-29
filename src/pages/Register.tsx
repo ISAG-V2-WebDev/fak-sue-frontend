@@ -1,27 +1,27 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 
 const Register = () => {
-    const [password, setPassword] = useState('')
-    const [confirmPassword, setConfirmPassword] = useState('')
+    const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
 
     const handlePasswordChange = (
         event: React.ChangeEvent<HTMLInputElement>
     ) => {
-        setPassword(event.target.value)
-    }
+        setPassword(event.target.value);
+    };
 
     const handleConfirmPasswordChange = (
         event: React.ChangeEvent<HTMLInputElement>
     ) => {
-        setConfirmPassword(event.target.value)
-    }
+        setConfirmPassword(event.target.value);
+    };
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault()
+        event.preventDefault();
         if (password !== confirmPassword) {
-            alert("Password and Confirm Password do not match")
+            alert('Password and Confirm Password do not match');
         }
-    }
+    };
 
     return (
         <div className="flex flex-col justify-center items-center h-fit">
@@ -29,7 +29,10 @@ const Register = () => {
                 <h1 className=" text-5xl font-bold mb-5">
                     FAK <br /> SUE
                 </h1>
-                <form action="#" className="flex flex-col" onSubmit={handleSubmit}>
+                <form
+                    action="#"
+                    className="flex flex-col"
+                    onSubmit={handleSubmit}>
                     <div className="grid gap-y-2 sm:grid-cols-4 sm:gap-y-10 sm:gap-x-4 max-w-4xl sm:mx-20 items-center">
                         <label
                             htmlFor="email"
@@ -117,7 +120,7 @@ const Register = () => {
                 </form>
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default Register
+export default Register;

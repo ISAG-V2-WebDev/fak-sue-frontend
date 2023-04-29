@@ -1,53 +1,53 @@
-import Add from '../assets/add.png'
-import bell from '../assets/bellicon.png'
-import Card from '../components/Card'
-import { CardProps } from '../components/Card'
-import FakForm from '../components/FakForm'
-import RubFakForm from '../components/RubFakForm'
-import { useState } from 'react'
-import { Link } from 'react-router-dom'
-import { cardInfoProps } from '../components/FakForm'
+import Add from '../assets/add.png';
+import bell from '../assets/bellicon.png';
+import Card from '../components/Card';
+import { CardProps } from '../components/Card';
+import FakForm from '../components/FakForm';
+import { cardInfoProps } from '../components/FakForm';
+import RubFakForm from '../components/RubFakForm';
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 const CardsPage = () => {
-    const reqCardDataFromLocalStorage = localStorage.getItem('reqCardData')
+    const reqCardDataFromLocalStorage = localStorage.getItem('reqCardData');
     const reqCardData = reqCardDataFromLocalStorage
         ? JSON.parse(reqCardDataFromLocalStorage)
-        : []
-    const cardDataFromLocalStorage = localStorage.getItem('cardData')
+        : [];
+    const cardDataFromLocalStorage = localStorage.getItem('cardData');
     const cardData = cardDataFromLocalStorage
         ? JSON.parse(cardDataFromLocalStorage)
-        : []
+        : [];
 
-    const [isRubFakFormVisible, setIsRubFakFormVisible] = useState(false)
-    const [isFakFormVisible, setIsFakFormVisible] = useState(false)
-    const [orderFull, setOrderFull] = useState(false)
-    const [indexOfCard, setIndexOfCard] = useState(0)
-    const [remain, setRemain] = useState(0)
-    const [cardInfo, setCardInfo] = useState<cardInfoProps>()
+    const [isRubFakFormVisible, setIsRubFakFormVisible] = useState(false);
+    const [isFakFormVisible, setIsFakFormVisible] = useState(false);
+    const [orderFull, setOrderFull] = useState(false);
+    const [indexOfCard, setIndexOfCard] = useState(0);
+    const [remain, setRemain] = useState(0);
+    const [cardInfo, setCardInfo] = useState<cardInfoProps>();
 
     const getIndexOfCard = (index: number) => {
-        setIndexOfCard(index)
-    }
+        setIndexOfCard(index);
+    };
 
     const changeFakFormVisibility = (visibility: boolean) => {
-        setIsFakFormVisible(visibility)
-    }
+        setIsFakFormVisible(visibility);
+    };
 
     const changeRubFakFormVisibility = (visibility: boolean) => {
-        setIsRubFakFormVisible(visibility)
-    }
+        setIsRubFakFormVisible(visibility);
+    };
 
     const isOrderFull = (allow: boolean) => {
-        setOrderFull(allow)
-    }
+        setOrderFull(allow);
+    };
 
     const remainOfQuantity = (rest: number) => {
-        setRemain(rest)
-    }
+        setRemain(rest);
+    };
 
     const getCardInfo = (info: cardInfoProps) => {
-        setCardInfo(info)
-    }
+        setCardInfo(info);
+    };
 
     const cards = cardData.map((card: CardProps, index: number) => (
         <Card
@@ -64,7 +64,7 @@ const CardsPage = () => {
             username={card.username}
             maxQuantity={card.maxQuantity}
         />
-    ))
+    ));
 
     return (
         <>
@@ -72,7 +72,10 @@ const CardsPage = () => {
                 <Link to="/yourreq">
                     <div className="absolute max-w-[50px] right-20 top-5 w-full cursor-pointer hover:-translate-y-1 transition-transform">
                         <img src={bell} alt="#" />
-                        <span className="text-white font-kanit font-bold absolute bg-red-700 w-[25px] rounded-full text-center top-1">{reqCardData.length}</span>
+                        <img src="" alt="#" />
+                        <span className="text-white font-kanit font-bold absolute bg-red-700 w-[25px] rounded-full text-center top-1">
+                            {reqCardData.length}
+                        </span>
                     </div>
                 </Link>
             )}
@@ -85,7 +88,7 @@ const CardsPage = () => {
                     src={Add}
                     alt="addBtn"
                     onClick={() => {
-                        setIsRubFakFormVisible(true)
+                        setIsRubFakFormVisible(true);
                     }}
                 />
             </div>
@@ -97,10 +100,16 @@ const CardsPage = () => {
             )}
 
             {isFakFormVisible && (
-                <FakForm changeFakFormVisibility={changeFakFormVisibility} orderFull={orderFull} indexOfCard={indexOfCard} remain={remain} cardInfo={cardInfo}/>
+                <FakForm
+                    changeFakFormVisibility={changeFakFormVisibility}
+                    orderFull={orderFull}
+                    indexOfCard={indexOfCard}
+                    remain={remain}
+                    cardInfo={cardInfo}
+                />
             )}
         </>
-    )
-}
+    );
+};
 
-export default CardsPage
+export default CardsPage;

@@ -1,9 +1,13 @@
-import Login from './pages/Login'
-import Register from './pages/Register'
-import CardsPage from './pages/CardsPage'
-import YourReq from './pages/YourReq'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import ProtectedRoutes from './components/ProtectedRoutes';
+import { AuthProvider } from './contexts/AuthContext';
+import CardsPage from './pages/CardsPage';
+import Login from './pages/Login';
+import Register from './pages/Register';
+import YourReq from './pages/YourReq';
+import axios from 'axios';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
+axios.defaults.baseURL = import.meta.env.VITE_APP_API;
 const App = () => {
     return (
         <>
@@ -13,16 +17,33 @@ const App = () => {
                     SUE
                 </div>
                 <BrowserRouter>
-                    <Routes>
-                    <Route path="/" element={<Login/> } />
-                    <Route path="/register" element={<Register/> } />
-                    <Route path="/cardspage" element={<CardsPage/> } />
-                    <Route path="/yourreq" element={<YourReq/> } />
-                    </Routes>
+                    <AuthProvider>
+                        <Routes>
+                            <Route path="/" element={<Login />} />
+                            <Route path="/register" element={<Register />} />
+                            <Route
+                                path="/cardspage"
+                                element={
+                                    <ProtectedRoutes>
+                                        <CardsPage />
+                                    </ProtectedRoutes>
+                                }
+                            />
+                            <Route
+                                path="/yourreq"
+                                element={
+                                    <ProtectedRoutes>
+                                        <CardsPage />
+                                    </ProtectedRoutes>
+                                }
+                            />
+                            <Route path="*" element={<Login />} />
+                        </Routes>
+                    </AuthProvider>
                 </BrowserRouter>
             </div>
         </>
-    )
-}
+    );
+};
 
-export default App
+export default App;

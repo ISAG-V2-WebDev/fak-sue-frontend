@@ -1,8 +1,30 @@
-import avatar from '../assets/peeps-avatar-alpha.png'
-import React from 'react'
-import { Link } from 'react-router-dom'
+import avatar from '../assets/peeps-avatar-alpha.png';
+import { FormLogin, login } from '../services/user.service';
+import { yupResolver } from '@hookform/resolvers/yup';
+import React, { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { Link } from 'react-router-dom';
+import * as yup from 'yup';
 
-const login = () => {
+const schema = yup
+    .object({
+        username: yup.string().required(),
+        password: yup.string().required()
+    })
+    .required();
+type FormData = yup.InferType<typeof schema>;
+
+const Login = () => {
+    const {
+        register,
+        handleSubmit,
+        formState: { errors }
+    } = useForm<FormData>({
+        resolver: yupResolver(schema)
+    });
+    const onSubmit = async (data: FormData) => {
+        await login({ ...data });
+    };
     return (
         <div className="flex justify-center items-center h-full flex-1">
             <div className="flex flex-col bg-white shadow-md px-5 lg:flex-row mx-10 sm:mx-24 py-8 rounded-3xl w-full max-w-5xl ">
@@ -24,7 +46,10 @@ const login = () => {
                     <p className="text-center lg:text-start mt-2">
                         See what is going on with your business.
                     </p>
-                    <form action="#" className="flex flex-col space-y-5">
+                    <form
+                        onSubmit={handleSubmit(onSubmit)}
+                        action="#"
+                        className="flex flex-col space-y-5">
                         <div>
                             <label
                                 htmlFor="username"
@@ -34,7 +59,7 @@ const login = () => {
                             <div className="mt-1">
                                 <input
                                     id="username"
-                                    name="username"
+                                    {...register('username')}
                                     type="text"
                                     required
                                     className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400
@@ -51,7 +76,7 @@ const login = () => {
                             <div className="mt-1">
                                 <input
                                     id="password"
-                                    name="password"
+                                    {...register('password')}
                                     type="password"
                                     autoComplete="current-password"
                                     placeholder="************"
@@ -68,7 +93,6 @@ const login = () => {
                                     name="remember_me"
                                     type="checkbox"
                                     className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
-                                    checked
                                 />
                                 <label
                                     htmlFor="remember_me"
@@ -76,14 +100,6 @@ const login = () => {
                                     Remember me
                                 </label>
                             </div>
-
-                            {/* <div className="text-sm">
-                                <a
-                                    href="#"
-                                    className="font-medium text-blue-600 hover:text-blue-500">
-                                    Forgot your password?
-                                </a>
-                            </div> */}
                         </div>
                         <div>
                             <button
@@ -114,7 +130,7 @@ const login = () => {
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default login
+export default Login;
