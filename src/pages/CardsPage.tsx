@@ -1,5 +1,6 @@
 import Add from '../assets/add.png';
 import bell from '../assets/bellicon.png';
+import logoutBtn from '../assets/logout-512.png';
 import Card from '../components/Card';
 import { CardProps } from '../components/Card';
 import FakForm from '../components/FakForm';
@@ -69,15 +70,22 @@ const CardsPage = () => {
     return (
         <>
             {reqCardData.length > 0 && (
-                <Link to="/yourreq">
-                    <div className="absolute max-w-[50px] right-20 top-5 w-full cursor-pointer hover:-translate-y-1 transition-transform">
-                        <img src={bell} alt="#" />
-                        <img src="" alt="#" />
-                        <span className="text-white font-kanit font-bold absolute bg-red-700 w-[25px] rounded-full text-center top-1">
-                            {reqCardData.length}
-                        </span>
-                    </div>
-                </Link>
+                <div className="flex gap-4 absolute right-4 top-4">
+                    <Link to="/yourreq">
+                        <div className=" max-w-[50px] right-20 top-5 w-full cursor-pointer hover:-translate-y-1 transition-transform">
+                            <img src={bell} alt="#" />
+
+                            <span className="text-white font-kanit font-bold absolute bg-red-700 w-[25px] rounded-full text-center top-1">
+                                {reqCardData.length}
+                            </span>
+                        </div>
+                    </Link>
+                    <Link to="/login">
+                        <div className=" max-w-[50px] right-20 top-5 w-full cursor-pointer hover:-translate-y-1 transition-transform">
+                            <img src={logoutBtn} alt="#" />
+                        </div>
+                    </Link>
+                </div>
             )}
 
             <div className="m-3.5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">

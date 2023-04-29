@@ -1,3 +1,4 @@
+import logoutBtn from '../assets/logout-512.png';
 import home from '../assets/white-home-icon-png-21.jpg';
 import ReqCard from '../components/ReqCard';
 import { ReqCardProps } from '../components/ReqCard';
@@ -20,11 +21,19 @@ const YourReq = () => {
 
     return (
         <div>
-            <Link to="/cardspage">
-                <div className="absolute max-w-[50px] right-20 top-5 w-full cursor-pointer hover:-translate-y-1 transition-transform">
-                    <img src={home} alt="#" />
-                </div>
-            </Link>
+            <div className="flex gap-4 absolute right-4 top-4">
+                <Link to="/cardspage">
+                    <div className=" max-w-[50px] right-20 top-5 w-full cursor-pointer hover:-translate-y-1 transition-transform">
+                        <img src={home} alt="#" />
+                    </div>
+                </Link>
+                <Link to="/login">
+                    <div className=" max-w-[50px] right-20 top-5 w-full cursor-pointer hover:-translate-y-1 transition-transform">
+                        <img src={logoutBtn} alt="#" />
+                    </div>
+                </Link>
+            </div>
+
             <div className="m-3.5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
                 {reqCards}
             </div>
