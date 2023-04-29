@@ -79,13 +79,13 @@ const login = () => {
                                 </label>
                             </div>
 
-                            <div className="text-sm">
+                            {/* <div className="text-sm">
                                 <a
                                     href="#"
                                     className="font-medium text-blue-600 hover:text-blue-500">
                                     Forgot your password?
                                 </a>
-                            </div>
+                            </div> */}
                         </div>
                         <div>
                             <button
@@ -105,7 +105,7 @@ const login = () => {
                             <Link to="/register">
                                 <button
                                     type="button"
-                                    className="w-full flex justify-center py-2 px-4 border border-transparent
+                                    className="w-full flex justify-center py-2 px-4 border
                                                 rounded-full shadow-sm text-md font-bold text-blue-700 bg-white hover:bg-blue-700 hover:text-white border-blue-700
                                                 focus:outline mt-3">
                                     Register
