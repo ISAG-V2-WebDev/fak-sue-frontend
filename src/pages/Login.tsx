@@ -86,7 +86,7 @@ const Login = () => {
                                 />
                             </div>
                         </div>
-                        <div className="flex items-center justify-between">
+                        {/* <div className="flex items-center justify-between">
                             <div className="flex items-center">
                                 <input
                                     id="remember_me"
@@ -100,7 +100,7 @@ const Login = () => {
                                     Remember me
                                 </label>
                             </div>
-                        </div>
+                        </div> */}
                         <div>
                             <button
                                 type="submit"

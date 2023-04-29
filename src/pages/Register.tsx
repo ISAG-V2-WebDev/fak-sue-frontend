@@ -1,6 +1,36 @@
+import { registerUser } from '../services/user.service';
+import { yupResolver } from '@hookform/resolvers/yup';
 import React, { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import * as yup from 'yup';
+
+const schema = yup.object({
+    email: yup.string().required(),
+    username: yup.string().required(),
+    student_id: yup.string().required(),
+    name: yup.string().required(),
+    password: yup.string().required(),
+    confirm_password: yup.string().required()
+});
+type FormData = yup.InferType<typeof schema>;
 
 const Register = () => {
+    const {
+        register,
+        handleSubmit,
+        formState: { errors }
+    } = useForm<FormData>({
+        resolver: yupResolver(schema)
+    });
+
+    const onSubmit = async (data: FormData) => {
+        if (password !== confirmPassword) {
+            alert('Password and Confirm Password do not match');
+            return;
+        }
+        await registerUser({ ...data });
+    };
+
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
 
@@ -16,13 +46,6 @@ const Register = () => {
         setConfirmPassword(event.target.value);
     };
 
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        if (password !== confirmPassword) {
-            alert('Password and Confirm Password do not match');
-        }
-    };
-
     return (
         <div className="flex flex-col justify-center items-center h-fit">
             <div className="bg-white shadow-md px-5 lg:flex-row mx-10 sm:mx-24 py-8 rounded-3xl w-full max-w-3xl mt-20">
@@ -32,7 +55,7 @@ const Register = () => {
                 <form
                     action="#"
                     className="flex flex-col"
-                    onSubmit={handleSubmit}>
+                    onSubmit={handleSubmit(onSubmit)}>
                     <div className="grid gap-y-2 sm:grid-cols-4 sm:gap-y-10 sm:gap-x-4 max-w-4xl sm:mx-20 items-center">
                         <label
                             htmlFor="email"
@@ -41,7 +64,7 @@ const Register = () => {
                         </label>
                         <input
                             id="email"
-                            name="email"
+                            {...register('email')}
                             type="email"
                             autoComplete="email"
                             placeholder="abc@gmail.com"
@@ -49,7 +72,42 @@ const Register = () => {
                             className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400
                               focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm col-span-3"
                         />
-
+                        <label
+                            htmlFor="fname"
+                            className="block text-md font-extrabold text-black font-kanit">
+                            Username
+                        </label>
+                        <input
+                            id="username"
+                            {...register('username')}
+                            type="text"
+                            className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400
+                              focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm col-span-3"
+                        />
+                        <label
+                            htmlFor="student_id"
+                            className="block text-md font-extrabold text-black font-kanit">
+                            รหัสนักศึกษา
+                        </label>
+                        <input
+                            id="student_id"
+                            {...register('student_id')}
+                            type="text"
+                            className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400
+                              focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm col-span-3"
+                        />
+                        <label
+                            htmlFor="fname"
+                            className="block text-md font-extrabold text-black font-kanit">
+                            ชื่อ-นามสกุล
+                        </label>
+                        <input
+                            id="name"
+                            {...register('name')}
+                            type="text"
+                            className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400
+                              focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm col-span-3"
+                        />
                         <label
                             htmlFor="password"
                             className="block text-md font-extrabold text-black font-kanit">
@@ -57,7 +115,7 @@ const Register = () => {
                         </label>
                         <input
                             id="password"
-                            name="password"
+                            {...register('password')}
                             type="password"
                             autoComplete="current-password"
                             placeholder="************"
@@ -75,37 +133,12 @@ const Register = () => {
                         </label>
                         <input
                             id="confirmPassword"
-                            name="confirmPassword"
+                            {...register('confirm_password')}
                             type="password"
                             placeholder="************"
                             required
                             value={confirmPassword}
                             onChange={handleConfirmPasswordChange}
-                            className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400
-                              focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm col-span-3"
-                        />
-
-                        <label
-                            htmlFor="studentId"
-                            className="block text-md font-extrabold text-black font-kanit">
-                            รหัสนักศึกษา
-                        </label>
-                        <input
-                            id="studentId"
-                            name="studentId"
-                            type="text"
-                            className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400
-                              focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm col-span-3"
-                        />
-                        <label
-                            htmlFor="fname"
-                            className="block text-md font-extrabold text-black font-kanit">
-                            ชื่อ-นามสกุล
-                        </label>
-                        <input
-                            id="name"
-                            name="name"
-                            type="text"
                             className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400
                               focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm col-span-3"
                         />

@@ -6,6 +6,7 @@ import { CardProps } from '../components/Card';
 import FakForm from '../components/FakForm';
 import { cardInfoProps } from '../components/FakForm';
 import RubFakForm from '../components/RubFakForm';
+import { logout } from '../services/user.service';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
@@ -69,8 +70,8 @@ const CardsPage = () => {
 
     return (
         <>
-            {reqCardData.length > 0 && (
-                <div className="flex gap-4 absolute right-4 top-4">
+            <div className="flex gap-4 absolute right-4 top-4">
+                {reqCardData.length > 0 && (
                     <Link to="/yourreq">
                         <div className=" max-w-[50px] right-20 top-5 w-full cursor-pointer hover:-translate-y-1 transition-transform">
                             <img src={bell} alt="#" />
@@ -80,13 +81,11 @@ const CardsPage = () => {
                             </span>
                         </div>
                     </Link>
-                    <Link to="/login">
-                        <div className=" max-w-[50px] right-20 top-5 w-full cursor-pointer hover:-translate-y-1 transition-transform">
-                            <img src={logoutBtn} alt="#" />
-                        </div>
-                    </Link>
+                )}
+                <div className=" max-w-[50px] right-20 top-5 w-full cursor-pointer hover:-translate-y-1 transition-transform">
+                    <img src={logoutBtn} onClick={logout} alt="#" />
                 </div>
-            )}
+            </div>
 
             <div className="m-3.5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
                 {cards}

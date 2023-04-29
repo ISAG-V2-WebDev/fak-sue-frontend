@@ -24,17 +24,17 @@ const App = () => {
                             <Route
                                 path="/cardspage"
                                 element={
-                                    
+                                    <ProtectedRoutes>
                                         <CardsPage />
-                                    
+                                    </ProtectedRoutes>
                                 }
                             />
                             <Route
                                 path="/yourreq"
                                 element={
-                                    
+                                    <ProtectedRoutes>
                                         <YourReq />
-                                    
+                                    </ProtectedRoutes>
                                 }
                             />
                             <Route path="*" element={<Login />} />
