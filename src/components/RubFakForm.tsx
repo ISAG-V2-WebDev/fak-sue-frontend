@@ -69,7 +69,7 @@ const RubFakForm = ({ changeRubFakFormVisibility }: RubFakFormProps) => {
                         <label
                             htmlFor="selectedTime"
                             className="font-kanit font-medium">
-                            เวลา
+                            สั่งได้ถึงเวลา
                         </label>
                         <select
                             id="time"

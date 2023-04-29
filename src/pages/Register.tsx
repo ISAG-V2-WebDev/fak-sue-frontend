@@ -1,13 +1,35 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 const Register = () => {
+    const [password, setPassword] = useState('')
+    const [confirmPassword, setConfirmPassword] = useState('')
+
+    const handlePasswordChange = (
+        event: React.ChangeEvent<HTMLInputElement>
+    ) => {
+        setPassword(event.target.value)
+    }
+
+    const handleConfirmPasswordChange = (
+        event: React.ChangeEvent<HTMLInputElement>
+    ) => {
+        setConfirmPassword(event.target.value)
+    }
+
+    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault()
+        if (password !== confirmPassword) {
+            alert("Password and Confirm Password do not match")
+        }
+    }
+
     return (
         <div className="flex flex-col justify-center items-center h-fit">
             <div className="bg-white shadow-md px-5 lg:flex-row mx-10 sm:mx-24 py-8 rounded-3xl w-full max-w-3xl mt-20">
                 <h1 className=" text-5xl font-bold mb-5">
                     FAK <br /> SUE
                 </h1>
-                <form action="#" className="flex flex-col">
+                <form action="#" className="flex flex-col" onSubmit={handleSubmit}>
                     <div className="grid gap-y-2 sm:grid-cols-4 sm:gap-y-10 sm:gap-x-4 max-w-4xl sm:mx-20 items-center">
                         <label
                             htmlFor="email"
@@ -30,18 +52,39 @@ const Register = () => {
                             className="block text-md font-extrabold text-black font-kanit">
                             Password
                         </label>
-                            <input
-                                id="password"
-                                name="password"
-                                type="password"
-                                autoComplete="current-password"
-                                placeholder="************"
-                                required
-                                className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400
+                        <input
+                            id="password"
+                            name="password"
+                            type="password"
+                            autoComplete="current-password"
+                            placeholder="************"
+                            required
+                            value={password}
+                            onChange={handlePasswordChange}
+                            className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400
                               focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm col-span-3"
-                            />
+                        />
 
-                        <label htmlFor="studentId" className="block text-md font-extrabold text-black font-kanit">
+                        <label
+                            htmlFor="confirmPassword"
+                            className="block text-md font-extrabold text-black font-kanit">
+                            Confirm Password
+                        </label>
+                        <input
+                            id="confirmPassword"
+                            name="confirmPassword"
+                            type="password"
+                            placeholder="************"
+                            required
+                            value={confirmPassword}
+                            onChange={handleConfirmPasswordChange}
+                            className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400
+                              focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm col-span-3"
+                        />
+
+                        <label
+                            htmlFor="studentId"
+                            className="block text-md font-extrabold text-black font-kanit">
                             รหัสนักศึกษา
                         </label>
                         <input
@@ -51,7 +94,9 @@ const Register = () => {
                             className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400
                               focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm col-span-3"
                         />
-                        <label htmlFor="fname" className="block text-md font-extrabold text-black font-kanit">
+                        <label
+                            htmlFor="fname"
+                            className="block text-md font-extrabold text-black font-kanit">
                             ชื่อ-นามสกุล
                         </label>
                         <input
