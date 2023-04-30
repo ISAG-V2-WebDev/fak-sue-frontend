@@ -1,21 +1,31 @@
-import ExitBtn from '../assets/Delete-Red-X-Button-Transparent.png'
-import cardWallpaper from '../assets/food-wallpaper.jpg'
-import user from '../assets/user.png'
-import { useState } from 'react'
+import ExitBtn from '../assets/Delete-Red-X-Button-Transparent.png';
+import cardWallpaper from '../assets/food-wallpaper.jpg';
+import user from '../assets/user.png';
+import { Profile } from './RubFakForm';
+import axios from 'axios';
+import Cookies from 'js-cookie';
+import { useEffect, useState } from 'react';
+import * as yup from 'yup';
+
+const schema = yup.object({
+    topic: yup.string().required(),
+    content: yup.string().required(),
+    max_order: yup.number().required()
+});
 
 export type cardInfoProps = {
-    username: string
-    restaurantName: string
-    time: string
-}
+    username: string;
+    restaurantName: string;
+    time: string;
+};
 
 type FakFormProps = {
-    changeFakFormVisibility: (visible: boolean) => void
-    orderFull: boolean
-    indexOfCard: number
-    remain: number
-    cardInfo?: cardInfoProps
-}
+    changeFakFormVisibility: (visible: boolean) => void;
+    orderFull: boolean;
+    indexOfCard: number;
+    remain: number;
+    cardInfo?: cardInfoProps;
+};
 
 const FakForm = ({
     changeFakFormVisibility,
@@ -24,37 +34,64 @@ const FakForm = ({
     remain,
     cardInfo
 }: FakFormProps) => {
-    const [menuName, setMenuName] = useState('')
-    const [quantity, setQuantity] = useState(1)
-    const [moreInfo, setMoreInfo] = useState('')
+    const [menuName, setMenuName] = useState('');
+    const [quantity, setQuantity] = useState(1);
+    const [moreInfo, setMoreInfo] = useState('');
+    const [profile, setProfile] = useState<Profile | null>(null);
+    const token = Cookies.get('token');
+    const profileFetch = async () => {
+        if (token) {
+            axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+            try {
+                const { data: res } = await axios.get(`/api/User/profile`);
+                // return res;
+                setProfile(res);
+            } catch (err) {
+                // logout();
+            }
+        }
+    };
+
+    useEffect(() => {
+        profileFetch();
+    }, []);
+
+    const cardDataFromLocalStorage = localStorage.getItem('cardData');
+    const cardData = cardDataFromLocalStorage
+        ? JSON.parse(cardDataFromLocalStorage)
+        : [];
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault()
+        event.preventDefault();
 
         // Save the submitted data to localStorage
         const newData = {
             indexOfCard,
-            username: 'guest',
+            username: JSON.stringify(profile?.username).replaceAll('"', ''),
+            owner: JSON.stringify(cardData[indexOfCard]?.username).replaceAll(
+                '"',
+                ''
+            ),
             menuName,
             quantity,
             moreInfo
-        }
+        };
         const existingData = JSON.parse(
             localStorage.getItem('reqCardData') || '[]'
-        )
+        );
         localStorage.setItem(
             'reqCardData',
             JSON.stringify([...existingData, newData])
-        )
+        );
 
         // Hide the RubFakForm component
-        changeFakFormVisibility(false)
+        changeFakFormVisibility(false);
 
         // Reset the form inputs
-        setMenuName('')
-        setQuantity(0)
-        setMoreInfo('')
-    }
+        setMenuName('');
+        setQuantity(0);
+        setMoreInfo('');
+    };
 
     return (
         <div className="flex fixed bg-black bg-opacity-70 w-full min-h-screen justify-center z-50">
@@ -88,7 +125,7 @@ const FakForm = ({
                             ร้านค้า : {cardInfo?.restaurantName}
                         </div>
                         <div className="text-white font-kanit">
-                            Deadline : {cardInfo?.time}
+                            หมดเวลาสั่ง : {cardInfo?.time}
                         </div>
                     </div>
                 </div>
@@ -105,7 +142,7 @@ const FakForm = ({
                             id="menu"
                             value={menuName}
                             onChange={(event) => {
-                                setMenuName(event.target.value)
+                                setMenuName(event.target.value);
                             }}
                             required
                             className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-full shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
@@ -123,7 +160,7 @@ const FakForm = ({
                             id="quantity"
                             value={quantity}
                             onChange={(event) => {
-                                setQuantity(parseInt(event.target.value))
+                                setQuantity(parseInt(event.target.value));
                             }}
                             min={1}
                             max={remain}
@@ -164,7 +201,7 @@ const FakForm = ({
                 </div>
             </form>
         </div>
-    )
-}
+    );
+};
 
-export default FakForm
+export default FakForm;

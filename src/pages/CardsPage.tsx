@@ -5,11 +5,16 @@ import Card from '../components/Card';
 import { CardProps } from '../components/Card';
 import FakForm from '../components/FakForm';
 import { cardInfoProps } from '../components/FakForm';
-import RubFakForm from '../components/RubFakForm';
-import { useState } from 'react';
+import { ReqCardProps } from '../components/ReqCard';
+import RubFakForm, { Profile } from '../components/RubFakForm';
+import { logout } from '../services/user.service';
+import axios from 'axios';
+import Cookies from 'js-cookie';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 const CardsPage = () => {
+    // const [blogs, setBlogs] = useState([]);
     const reqCardDataFromLocalStorage = localStorage.getItem('reqCardData');
     const reqCardData = reqCardDataFromLocalStorage
         ? JSON.parse(reqCardDataFromLocalStorage)
@@ -18,6 +23,40 @@ const CardsPage = () => {
     const cardData = cardDataFromLocalStorage
         ? JSON.parse(cardDataFromLocalStorage)
         : [];
+    const [profile, setProfile] = useState<Profile | null>(null);
+    const token = Cookies.get('token');
+    const profileFetch = async () => {
+        if (token) {
+            axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+            try {
+                const { data: res } = await axios.get(`/api/User/profile`);
+                // return res;
+                setProfile(res);
+            } catch (err) {
+                // logout();
+            }
+        }
+    };
+    useEffect(() => {
+        profileFetch();
+    }, []);
+
+    // const cardDataFetch = async () => {
+    //     if (token) {
+    //         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    //         try {
+    //             const { data: res } = await axios.get(`/api/Blog/list`);
+    //             // return res;
+    //             setBlogs(res);
+    //         } catch (err) {
+    //             // logout();
+    //         }
+    //     }
+    // };
+
+    // useEffect(() => {
+    //     cardDataFetch();
+    // }, []);
 
     const [isRubFakFormVisible, setIsRubFakFormVisible] = useState(false);
     const [isFakFormVisible, setIsFakFormVisible] = useState(false);
@@ -50,43 +89,65 @@ const CardsPage = () => {
         setCardInfo(info);
     };
 
-    const cards = cardData.map((card: CardProps, index: number) => (
-        <Card
-            key={index}
-            getCardInfo={getCardInfo}
-            remainOfQuantity={remainOfQuantity}
-            getIndexOfCard={getIndexOfCard}
-            isOrderFull={isOrderFull}
-            changeFakFormVisibility={changeFakFormVisibility}
-            index={index}
-            restaurantName={card.restaurantName}
-            time={card.time}
-            description={card.description}
-            username={card.username}
-            maxQuantity={card.maxQuantity}
-        />
-    ));
+    const cards = cardData
+        .filter((card: CardProps): boolean => {
+            return profile
+                ? card.username !=
+                      JSON.stringify(profile?.username).replaceAll('"', '')
+                : false;
+        })
+        .map((card: CardProps, index: number) => (
+            <Card
+                key={index}
+                getCardInfo={getCardInfo}
+                remainOfQuantity={remainOfQuantity}
+                getIndexOfCard={getIndexOfCard}
+                isOrderFull={isOrderFull}
+                changeFakFormVisibility={changeFakFormVisibility}
+                index={index}
+                restaurantName={card.restaurantName}
+                time={card.time}
+                description={card.description}
+                username={card.username}
+                maxQuantity={card.maxQuantity}
+            />
+        ));
 
     return (
         <>
-            {reqCardData.length > 0 && (
-                <div className="flex gap-4 absolute right-4 top-4">
+            <div className="flex gap-4 absolute right-4 top-4">
+                {reqCardData.filter((card: ReqCardProps) => {
+                    return profile
+                        ? card.owner ==
+                              JSON.stringify(profile?.username).replaceAll(
+                                  '"',
+                                  ''
+                              )
+                        : false;
+                }).length > 0 && (
                     <Link to="/yourreq">
                         <div className=" max-w-[50px] right-20 top-5 w-full cursor-pointer hover:-translate-y-1 transition-transform">
                             <img src={bell} alt="#" />
 
                             <span className="text-white font-kanit font-bold absolute bg-red-700 w-[25px] rounded-full text-center top-1">
-                                {reqCardData.length}
+                                {
+                                    reqCardData.filter((card: ReqCardProps) => {
+                                        return profile
+                                            ? card.owner ==
+                                                  JSON.stringify(
+                                                      profile?.username
+                                                  ).replaceAll('"', '')
+                                            : false;
+                                    }).length
+                                }
                             </span>
                         </div>
                     </Link>
-                    <Link to="/login">
-                        <div className=" max-w-[50px] right-20 top-5 w-full cursor-pointer hover:-translate-y-1 transition-transform">
-                            <img src={logoutBtn} alt="#" />
-                        </div>
-                    </Link>
+                )}
+                <div className=" max-w-[50px] right-20 top-5 w-full cursor-pointer hover:-translate-y-1 transition-transform">
+                    <img src={logoutBtn} onClick={logout} alt="#" />
                 </div>
-            )}
+            </div>
 
             <div className="m-3.5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
                 {cards}
