@@ -1,7 +1,20 @@
 import ExitBtn from '../assets/Delete-Red-X-Button-Transparent.png';
 import CardData from '../data/cardData';
 import axios from 'axios';
-import { useState } from 'react';
+import Cookies from 'js-cookie';
+import { useEffect, useState } from 'react';
+
+export type Profile = {
+    id: string;
+    name: string | null;
+    role: string | null;
+    student_id: string | null;
+    email: string | null;
+    profile_image: string | null;
+    banned: boolean | null;
+    deleted: boolean | null;
+    username: string | null;
+};
 
 type RubFakFormProps = {
     changeRubFakFormVisibility: (visible: boolean) => void;
@@ -12,13 +25,31 @@ const RubFakForm = ({ changeRubFakFormVisibility }: RubFakFormProps) => {
     const [time, setSelectedTime] = useState('');
     const [description, setDescription] = useState('');
     const [maxQuantity, setMaxQuantity] = useState(0);
+    const [profile, setProfile] = useState<Profile | null>(null);
+    const token = Cookies.get('token');
+    const profileFetch = async () => {
+        if (token) {
+            axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+            try {
+                const { data: res } = await axios.get(`/api/User/profile`);
+                // return res;
+                setProfile(res);
+            } catch (err) {
+                // logout();
+            }
+        }
+    };
+
+    useEffect(() => {
+        profileFetch();
+    }, []);
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
         // Save the submitted data to localStorage
         const newData = {
-            username: 'guest',
+            username: JSON.stringify(profile?.username).replaceAll('"', ''),
             restaurantName,
             time,
             description,

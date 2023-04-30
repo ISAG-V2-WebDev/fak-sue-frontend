@@ -1,20 +1,20 @@
-import user from '../assets/user.png'
-import cardWallpaper from '../assets/food-wallpaper.jpg'
-import { cardInfoProps } from './FakForm'
+import cardWallpaper from '../assets/food-wallpaper.jpg';
+import user from '../assets/user.png';
+import { cardInfoProps } from './FakForm';
 
 export type CardProps = {
-    getCardInfo: (info: cardInfoProps) => void
-    remainOfQuantity: (rest: number) => void
-    getIndexOfCard: (index: number) => void
-    isOrderFull: (allow: boolean) => void
-    changeFakFormVisibility: (visible: boolean) => void
-    index: number
-    restaurantName: string
-    time: string
-    description: string
-    username: string
-    maxQuantity: number
-}
+    getCardInfo: (info: cardInfoProps) => void;
+    remainOfQuantity: (rest: number) => void;
+    getIndexOfCard: (index: number) => void;
+    isOrderFull: (allow: boolean) => void;
+    changeFakFormVisibility: (visible: boolean) => void;
+    index: number;
+    restaurantName: string;
+    time: string;
+    description: string;
+    username: string;
+    maxQuantity: number;
+};
 
 const Card = ({
     getCardInfo,
@@ -29,26 +29,29 @@ const Card = ({
     username,
     maxQuantity
 }: CardProps) => {
-    const reqCardDataFromLocalStorage = localStorage.getItem('reqCardData')
+    const reqCardDataFromLocalStorage = localStorage.getItem('reqCardData');
     const reqCardData = reqCardDataFromLocalStorage
         ? JSON.parse(reqCardDataFromLocalStorage)
-        : []
+        : [];
 
     // const totalQuantity = reqCardData.reduce((acc : number, curr: {quantity : number} ) => acc + curr.quantity, 0)
-    const totalQuantity = reqCardData.reduce((acc: number, curr:{indexOfCard: number , quantity: number}) => {
-        if (curr.indexOfCard === index) {
-            return acc + curr.quantity
-        }
-        return acc
-    }, 0)
+    const totalQuantity = reqCardData.reduce(
+        (acc: number, curr: { indexOfCard: number; quantity: number }) => {
+            if (curr.indexOfCard === index) {
+                return acc + curr.quantity;
+            }
+            return acc;
+        },
+        0
+    );
 
     const changeIsOrderFull = () => {
         if (totalQuantity >= maxQuantity) {
-            isOrderFull(true)
+            isOrderFull(true);
         } else {
-            isOrderFull(false)
+            isOrderFull(false);
         }
-    }
+    };
 
     return (
         <div className="relative bg-white rounded-3xl shadow-md overflow-hidden">
@@ -76,7 +79,9 @@ const Card = ({
                         <div className="text-white overflow-hidden text-ellipsis w-full font-kanit">
                             ร้านค้า : {restaurantName}
                         </div>
-                        <div className="text-white font-kanit">Deadline : {time}</div>
+                        <div className="text-white font-kanit">
+                            หมดเวลาสั่ง : {time}
+                        </div>
                     </div>
                     <div className="text-white font-kanit px-5 bg-pink-500 h-fit rounded-full">
                         {totalQuantity} / {maxQuantity}
@@ -89,18 +94,18 @@ const Card = ({
                     <button
                         className="bg-orange-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg mt-2"
                         onClick={() => {
-                            changeFakFormVisibility(true)
-                            changeIsOrderFull()
-                            getIndexOfCard(index)
-                            remainOfQuantity(maxQuantity - totalQuantity)
-                            getCardInfo({username, restaurantName, time})
+                            changeFakFormVisibility(true);
+                            changeIsOrderFull();
+                            getIndexOfCard(index);
+                            remainOfQuantity(maxQuantity - totalQuantity);
+                            getCardInfo({ username, restaurantName, time });
                         }}>
                         ฝากซื้อ
                     </button>
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default Card
+export default Card;

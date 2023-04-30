@@ -81,6 +81,7 @@ const Register = () => {
                             id="username"
                             {...register('username')}
                             type="text"
+                            placeholder="abc"
                             className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400
                               focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm col-span-3"
                         />
@@ -92,6 +93,7 @@ const Register = () => {
                         <input
                             id="student_id"
                             {...register('student_id')}
+                            placeholder="99999999"
                             type="text"
                             className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400
                               focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm col-span-3"
@@ -105,6 +107,7 @@ const Register = () => {
                             id="name"
                             {...register('name')}
                             type="text"
+                            placeholder="abc def"
                             className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400
                               focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm col-span-3"
                         />

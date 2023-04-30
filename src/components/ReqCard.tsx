@@ -1,16 +1,17 @@
-import user from '../assets/user.png'
-import cardWallpaper from '../assets/food-wallpaper.jpg'
+import cardWallpaper from '../assets/food-wallpaper.jpg';
+import user from '../assets/user.png';
 
 export type ReqCardProps = {
     username: string;
+    owner: string;
     menuName: string;
     quantity: number;
-    moreInfo: string;  
+    moreInfo: string;
 };
 
-const ReqCard = ({username, menuName, quantity, moreInfo}: ReqCardProps) => {
-  return (
-    <div className="relative bg-white rounded-3xl shadow-md overflow-hidden">
+const ReqCard = ({ username, menuName, quantity, moreInfo }: ReqCardProps) => {
+    return (
+        <div className="relative bg-white rounded-3xl shadow-md overflow-hidden">
             <div className="absolute top-0 left-0 w-full h-1/3">
                 <div className="bg-black absolute opacity-50 h-full w-full"></div>
                 <img
@@ -35,18 +36,17 @@ const ReqCard = ({username, menuName, quantity, moreInfo}: ReqCardProps) => {
                         <div className="text-white overflow-hidden text-ellipsis w-full font-kanit">
                             เมนู : {menuName}
                         </div>
-                        <div className="text-white font-kanit">จำนวน : {quantity}</div>
+                        <div className="text-white font-kanit">
+                            จำนวน : {quantity}
+                        </div>
                     </div>
                 </div>
                 <div className="h-44 bg-slate-100 rounded-3xl mt-2 overflow-auto p-2">
-                    <p className="text-black">
-                        {moreInfo}
-                    </p>
+                    <p className="text-black">{moreInfo}</p>
                 </div>
-
             </div>
         </div>
-  )
-}
+    );
+};
 
-export default ReqCard
+export default ReqCard;
