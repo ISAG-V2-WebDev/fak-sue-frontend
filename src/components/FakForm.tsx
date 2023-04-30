@@ -1,23 +1,12 @@
 import ExitBtn from '../assets/Delete-Red-X-Button-Transparent.png';
 import cardWallpaper from '../assets/food-wallpaper.jpg';
 import user from '../assets/user.png';
-import { Profile } from './RubFakForm';
+import { Blogs } from '../types/BlogType';
+import { cardInfoProps } from '../types/CardType';
+import { Profile } from '../types/ProfileTypes';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { useEffect, useState } from 'react';
-import * as yup from 'yup';
-
-const schema = yup.object({
-    topic: yup.string().required(),
-    content: yup.string().required(),
-    max_order: yup.number().required()
-});
-
-export type cardInfoProps = {
-    username: string;
-    restaurantName: string;
-    time: string;
-};
 
 type FakFormProps = {
     changeFakFormVisibility: (visible: boolean) => void;
@@ -38,6 +27,7 @@ const FakForm = ({
     const [quantity, setQuantity] = useState(1);
     const [moreInfo, setMoreInfo] = useState('');
     const [profile, setProfile] = useState<Profile | null>(null);
+    const [blogsData, setBlogsData] = useState<Blogs>();
     const token = Cookies.get('token');
     const profileFetch = async () => {
         if (token) {
@@ -56,41 +46,108 @@ const FakForm = ({
         profileFetch();
     }, []);
 
-    const cardDataFromLocalStorage = localStorage.getItem('cardData');
-    const cardData = cardDataFromLocalStorage
-        ? JSON.parse(cardDataFromLocalStorage)
-        : [];
+    const blogsFetch = async () => {
+        if (token) {
+            axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+            try {
+                const { data: res } = await axios.get(`/api/Blog/list`);
+                // return res;
+                // console.log(res)
+                setBlogsData(res);
+            } catch (err) {
+                // logout();
+            }
+        }
+    };
+
+    useEffect(() => {
+        blogsFetch();
+    }, []);
+
+    // const cardDataFromLocalStorage = localStorage.getItem('cardData');
+    // const cardData = cardDataFromLocalStorage
+    //     ? JSON.parse(cardDataFromLocalStorage)
+    //     : [];
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
+        // event.preventDefault();
 
-        // Save the submitted data to localStorage
-        const newData = {
-            indexOfCard,
-            username: JSON.stringify(profile?.username).replaceAll('"', ''),
-            owner: JSON.stringify(cardData[indexOfCard]?.username).replaceAll(
-                '"',
-                ''
-            ),
-            menuName,
-            quantity,
-            moreInfo
+        // // Save the submitted data to localStorage
+        // const newData = {
+        //     indexOfCard,
+        //     username: JSON.stringify(profile?.username).replaceAll('"', ''),
+        //     owner: JSON.stringify(cardData[indexOfCard]?.username).replaceAll(
+        //         '"',
+        //         ''
+        //     ),
+        //     menuName,
+        //     quantity,
+        //     moreInfo
+        // };
+        // const existingData = JSON.parse(
+        //     localStorage.getItem('reqCardData') || '[]'
+        // );
+        // localStorage.setItem(
+        //     'reqCardData',
+        //     JSON.stringify([...existingData, newData])
+        // );
+
+        // // Hide the RubFakForm component
+        // changeFakFormVisibility(false);
+
+        // // Reset the form inputs
+        // setMenuName('');
+        // setQuantity(0);
+        // setMoreInfo('');
+        // const menuPost = async () => {
+        //     if (token && cardInfo) {
+        //         axios.defaults.headers.common[
+        //             'Authorization'
+        //         ] = `Bearer ${token}`;
+        //         try {
+        //         } catch (err) {
+        //             await axios.post(`/api/Menu`, {
+        //                 restaurant: `${cardInfo?.restaurantName}`,
+        //                 foodName: `${menuName}`,
+        //                 price: 1
+        //             });
+        //         }
+        //     }
+        // };
+        // menuPost();
+
+        const orderPost = async () => {
+            if (token && cardInfo && profile) {
+                axios.defaults.headers.common[
+                    'Authorization'
+                ] = `Bearer ${token}`;
+                try {
+                    await axios.post(
+                        `/api/Order/create/blogid=${cardInfo.id}`,
+                        {
+                            user: {
+                                id: profile.id,
+                                username: profile.username,
+                                name: profile.name,
+                                student_id: profile.student_id,
+                                email: profile.email
+                            },
+                            menu: {
+                                restaurant: `${cardInfo?.restaurantName}`,
+                                foodName: `${menuName}`,
+                                price: 1
+                            },
+                            detail: moreInfo,
+                            quantity: quantity,
+                            blog_id: cardInfo.id
+                        }
+                    );
+                } catch (err) {
+                    //console.log(err)
+                }
+            }
         };
-        const existingData = JSON.parse(
-            localStorage.getItem('reqCardData') || '[]'
-        );
-        localStorage.setItem(
-            'reqCardData',
-            JSON.stringify([...existingData, newData])
-        );
-
-        // Hide the RubFakForm component
-        changeFakFormVisibility(false);
-
-        // Reset the form inputs
-        setMenuName('');
-        setQuantity(0);
-        setMoreInfo('');
+        orderPost();
     };
 
     return (

@@ -1,10 +1,10 @@
 import logoutBtn from '../assets/logout-512.png';
 import home from '../assets/white-home-icon-png-21.jpg';
-import { CardProps } from '../components/Card';
 import ReqCard from '../components/ReqCard';
-import { ReqCardProps } from '../components/ReqCard';
-import { Profile } from '../components/RubFakForm';
 import { logout } from '../services/user.service';
+import { Blog, Blogs, Order } from '../types/BlogType';
+import { ReqCardProps } from '../types/CardType';
+import { Profile } from '../types/ProfileTypes';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { useEffect, useState } from 'react';
@@ -20,6 +20,7 @@ const YourReq = () => {
         ? JSON.parse(cardDataFromLocalStorage)
         : [];
     const [profile, setProfile] = useState<Profile | null>(null);
+    const [blogsData, setBlogsData] = useState<Blogs>();
     const token = Cookies.get('token');
     const profileFetch = async () => {
         if (token) {
@@ -36,23 +37,68 @@ const YourReq = () => {
     useEffect(() => {
         profileFetch();
     }, []);
-    const reqCards = reqCardData
-        .filter((card: ReqCardProps) => {
-            return profile
-                ? card.owner ==
-                      JSON.stringify(profile?.username).replaceAll('"', '')
-                : false;
-        })
-        .map((card: ReqCardProps, index: number) => (
-            <ReqCard
-                key={index}
-                username={card.username}
-                owner={card.owner}
-                menuName={card.menuName}
-                quantity={card.quantity}
-                moreInfo={card.moreInfo}
-            />
-        ));
+
+    const blogsFetch = async () => {
+        if (token) {
+            axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+            try {
+                const { data: res } = await axios.get(`/api/Blog/list`);
+                // return res;
+                // console.log(res)
+                setBlogsData(res);
+            } catch (err) {
+                // logout();
+            }
+        }
+    };
+
+    useEffect(() => {
+        blogsFetch();
+    }, []);
+
+    // const reqCards = reqCardData
+    //     .filter((card: ReqCardProps) => {
+    //         // return profile
+    //         //     ? card.owner ==
+    //         //           JSON.stringify(profile?.username).replaceAll('"', '')
+    //         //     : false;
+    //         return true;
+    //     })
+    //     .map((card: ReqCardProps, index: number) => (
+    //         <ReqCard
+    //             key={index}
+    //             username={card.username}
+    //             // owner={card.owner}
+    //             menuName={card.menuName}
+    //             quantity={card.quantity}
+    //             moreInfo={card.moreInfo}
+    //         />
+    //     ));
+
+    const cardsReqReal =
+        blogsData && profile ? (
+            <>
+                {blogsData.blogs
+                    .filter((blog: Blog): boolean => {
+                        return blog.author.username == profile.username;
+                    })
+                    .map((blog: Blog, index: number) => {
+                        return blog.orders.map((order: Order) => {
+                            return (
+                                <ReqCard
+                                    key={index}
+                                    username={order.user.username}
+                                    menuName={order.menu.foodName}
+                                    quantity={order.quantity}
+                                    moreInfo={order.detail}
+                                />
+                            );
+                        });
+                    })}
+            </>
+        ) : (
+            <>Loading...</>
+        );
 
     return (
         <div>
@@ -73,7 +119,8 @@ const YourReq = () => {
             </div>
 
             <div className="m-3.5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-                {reqCards}
+                {/* {reqCards} */}
+                {cardsReqReal}
             </div>
         </div>
     );

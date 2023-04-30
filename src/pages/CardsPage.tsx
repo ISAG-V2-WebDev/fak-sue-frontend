@@ -2,27 +2,27 @@ import Add from '../assets/add.png';
 import bell from '../assets/bellicon.png';
 import logoutBtn from '../assets/logout-512.png';
 import Card from '../components/Card';
-import { CardProps } from '../components/Card';
 import FakForm from '../components/FakForm';
-import { cardInfoProps } from '../components/FakForm';
-import { ReqCardProps } from '../components/ReqCard';
-import RubFakForm, { Profile } from '../components/RubFakForm';
+import RubFakForm from '../components/RubFakForm';
 import { logout } from '../services/user.service';
+import { Blog, Blogs } from '../types/BlogType';
+import { CardProps, ReqCardProps, cardInfoProps } from '../types/CardType';
+import { Profile } from '../types/ProfileTypes';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 const CardsPage = () => {
-    // const [blogs, setBlogs] = useState([]);
+    const [blogsData, setBlogsData] = useState<Blogs>();
     const reqCardDataFromLocalStorage = localStorage.getItem('reqCardData');
-    const reqCardData = reqCardDataFromLocalStorage
-        ? JSON.parse(reqCardDataFromLocalStorage)
-        : [];
-    const cardDataFromLocalStorage = localStorage.getItem('cardData');
-    const cardData = cardDataFromLocalStorage
-        ? JSON.parse(cardDataFromLocalStorage)
-        : [];
+    // const reqCardData = reqCardDataFromLocalStorage
+    //     ? JSON.parse(reqCardDataFromLocalStorage)
+    //     : [];
+    // const cardDataFromLocalStorage = localStorage.getItem('cardData');
+    // const cardData = cardDataFromLocalStorage
+    //     ? JSON.parse(cardDataFromLocalStorage)
+    //     : [];
     const [profile, setProfile] = useState<Profile | null>(null);
     const token = Cookies.get('token');
     const profileFetch = async () => {
@@ -41,22 +41,23 @@ const CardsPage = () => {
         profileFetch();
     }, []);
 
-    // const cardDataFetch = async () => {
-    //     if (token) {
-    //         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-    //         try {
-    //             const { data: res } = await axios.get(`/api/Blog/list`);
-    //             // return res;
-    //             setBlogs(res);
-    //         } catch (err) {
-    //             // logout();
-    //         }
-    //     }
-    // };
+    const blogsFetch = async () => {
+        if (token) {
+            axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+            try {
+                const { data: res } = await axios.get(`/api/Blog/list`);
+                // return res;
+                // console.log(res)
+                setBlogsData(res);
+            } catch (err) {
+                // logout();
+            }
+        }
+    };
 
-    // useEffect(() => {
-    //     cardDataFetch();
-    // }, []);
+    useEffect(() => {
+        blogsFetch();
+    }, []);
 
     const [isRubFakFormVisible, setIsRubFakFormVisible] = useState(false);
     const [isFakFormVisible, setIsFakFormVisible] = useState(false);
@@ -89,34 +90,69 @@ const CardsPage = () => {
         setCardInfo(info);
     };
 
-    const cards = cardData
-        .filter((card: CardProps): boolean => {
-            return profile
-                ? card.username !=
-                      JSON.stringify(profile?.username).replaceAll('"', '')
-                : false;
-        })
-        .map((card: CardProps, index: number) => (
-            <Card
-                key={index}
-                getCardInfo={getCardInfo}
-                remainOfQuantity={remainOfQuantity}
-                getIndexOfCard={getIndexOfCard}
-                isOrderFull={isOrderFull}
-                changeFakFormVisibility={changeFakFormVisibility}
-                index={index}
-                restaurantName={card.restaurantName}
-                time={card.time}
-                description={card.description}
-                username={card.username}
-                maxQuantity={card.maxQuantity}
-            />
-        ));
+    // const cards = cardData
+    //     .filter((card: CardProps): boolean => {
+    //         return profile ? card.username != profile?.username : false;
+    //     })
+    //     .map((card: CardProps, index: number) => (
+    //         <Card
+    //             key={index}
+    //             getCardInfo={getCardInfo}
+    //             remainOfQuantity={remainOfQuantity}
+    //             getIndexOfCard={getIndexOfCard}
+    //             isOrderFull={isOrderFull}
+    //             changeFakFormVisibility={changeFakFormVisibility}
+    //             index={index}
+    //             restaurantName={card.restaurantName}
+    //             time={card.time}
+    //             description={card.description}
+    //             username={card.username}
+    //             maxQuantity={card.maxQuantity}
+    //         />
+    //     ));
 
+    const cardsReal =
+        blogsData && profile ? (
+            <>
+                {blogsData.blogs
+                    .filter((blog: Blog): boolean => {
+                        return blog.author.username != profile.username;
+                    })
+                    .map((blog: Blog, index: number) => {
+                        let quan: number = 0;
+                        blog.orders.forEach((order) => {
+                            quan += order.quantity;
+                        });
+                        return (
+                            <Card
+                                key={blog.blog_id}
+                                id={blog.blog_id}
+                                getCardInfo={getCardInfo}
+                                remainOfQuantity={remainOfQuantity}
+                                getIndexOfCard={getIndexOfCard}
+                                isOrderFull={isOrderFull}
+                                changeFakFormVisibility={
+                                    changeFakFormVisibility
+                                }
+                                index={index}
+                                restaurantName={blog.topic}
+                                time={blog.time}
+                                description={blog.content}
+                                username={blog.author.username}
+                                quantity={quan}
+                                maxQuantity={blog.max_order}
+                            />
+                        );
+                    })}
+            </>
+        ) : (
+            <>Loading...</>
+        );
+    let reqOrderCount = 0;
     return (
         <>
             <div className="flex gap-4 absolute right-4 top-4">
-                {reqCardData.filter((card: ReqCardProps) => {
+                {/* {reqCardData.filter((card: ReqCardProps) => {
                     return profile
                         ? card.owner ==
                               JSON.stringify(profile?.username).replaceAll(
@@ -131,18 +167,52 @@ const CardsPage = () => {
 
                             <span className="text-white font-kanit font-bold absolute bg-red-700 w-[25px] rounded-full text-center top-1">
                                 {
-                                    reqCardData.filter((card: ReqCardProps) => {
-                                        return profile
-                                            ? card.owner ==
-                                                  JSON.stringify(
-                                                      profile?.username
-                                                  ).replaceAll('"', '')
-                                            : false;
-                                    }).length
+                                    // reqCardData.filter((card: ReqCardProps) => {
+                                    //     return profile
+                                    //         ? card.owner ==
+                                    //               JSON.stringify(
+                                    //                   profile?.username
+                                    //               ).replaceAll('"', '')
+                                    //         : false;
+                                    // }).length
                                 }
                             </span>
                         </div>
                     </Link>
+                )} */}
+                {blogsData && profile ? (
+                    blogsData.blogs
+                        .filter((blog: Blog) => {
+                            return blog.author.username == profile.username;
+                        })
+                        .map((blog: Blog) => {
+                            // console.log(blog.orders.length);
+                            reqOrderCount += blog.orders.length;
+                            // return blog.orders.length > 0;
+                            // console.log(reqOrderCount);
+                        }) && (
+                        <Link to="/yourreq">
+                            <div className=" max-w-[50px] right-20 top-5 w-full cursor-pointer hover:-translate-y-1 transition-transform">
+                                <img src={bell} alt="#" />
+
+                                <span className="text-white font-kanit font-bold absolute bg-red-700 w-[25px] rounded-full text-center top-1">
+                                    {
+                                        // reqCardData.filter((card: ReqCardProps) => {
+                                        //     return profile
+                                        //         ? card.owner ==
+                                        //               JSON.stringify(
+                                        //                   profile?.username
+                                        //               ).replaceAll('"', '')
+                                        //         : false;
+                                        // }).length
+                                    }
+                                    {}
+                                </span>
+                            </div>
+                        </Link>
+                    )
+                ) : (
+                    <></>
                 )}
                 <div className=" max-w-[50px] right-20 top-5 w-full cursor-pointer hover:-translate-y-1 transition-transform">
                     <img src={logoutBtn} onClick={logout} alt="#" />
@@ -152,7 +222,8 @@ const CardsPage = () => {
                 กดฝากได้เลยครับ
             </div>
             <div className="m-3.5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-                {cards}
+                {/* {cards} */}
+                {cardsReal}
             </div>
             <div className="fixed max-w-[5rem] bottom-10 right-10 hover:-translate-y-2 transition-transform cursor-pointer z-40">
                 <img

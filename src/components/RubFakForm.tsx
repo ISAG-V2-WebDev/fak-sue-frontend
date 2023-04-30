@@ -1,20 +1,9 @@
 import ExitBtn from '../assets/Delete-Red-X-Button-Transparent.png';
-import CardData from '../data/cardData';
+import { Profile } from '../types/ProfileTypes';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { useEffect, useState } from 'react';
-
-export type Profile = {
-    id: string;
-    name: string | null;
-    role: string | null;
-    student_id: string | null;
-    email: string | null;
-    profile_image: string | null;
-    banned: boolean | null;
-    deleted: boolean | null;
-    username: string | null;
-};
+import { Blogs } from '../types/BlogType';
 
 type RubFakFormProps = {
     changeRubFakFormVisibility: (visible: boolean) => void;
@@ -25,6 +14,7 @@ const RubFakForm = ({ changeRubFakFormVisibility }: RubFakFormProps) => {
     const [time, setSelectedTime] = useState('');
     const [description, setDescription] = useState('');
     const [maxQuantity, setMaxQuantity] = useState(0);
+
     const [profile, setProfile] = useState<Profile | null>(null);
     const token = Cookies.get('token');
     const profileFetch = async () => {
@@ -48,20 +38,40 @@ const RubFakForm = ({ changeRubFakFormVisibility }: RubFakFormProps) => {
         event.preventDefault();
 
         // Save the submitted data to localStorage
-        const newData = {
-            username: JSON.stringify(profile?.username).replaceAll('"', ''),
-            restaurantName,
-            time,
-            description,
-            maxQuantity
+        // const newData = {
+        //     username: profile?.username,
+        //     restaurantName,
+        //     time,
+        //     description,
+        //     maxQuantity
+        // };
+        // const existingData = JSON.parse(
+        //     localStorage.getItem('cardData') || '[]'
+        // );
+        // localStorage.setItem(
+        //     'cardData',
+        //     JSON.stringify([...existingData, newData])
+        // );
+
+        const blogPost = async () => {
+            if (token && profile) {
+                axios.defaults.headers.common[
+                    'Authorization'
+                ] = `Bearer ${token}`;
+                try {
+                    await axios.post(`/api/Blog/create`, {
+                        topic: restaurantName,
+                        content: description,
+                        max_order: maxQuantity,
+                        time: time
+                    });
+                } catch (err) {
+                    //console.log(err)
+                }
+            }
         };
-        const existingData = JSON.parse(
-            localStorage.getItem('cardData') || '[]'
-        );
-        localStorage.setItem(
-            'cardData',
-            JSON.stringify([...existingData, newData])
-        );
+
+        blogPost();
 
         // Hide the RubFakForm component
         changeRubFakFormVisibility(false);

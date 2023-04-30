@@ -1,13 +1,6 @@
 import cardWallpaper from '../assets/food-wallpaper.jpg';
 import user from '../assets/user.png';
-
-export type ReqCardProps = {
-    username: string;
-    owner: string;
-    menuName: string;
-    quantity: number;
-    moreInfo: string;
-};
+import { ReqCardProps } from '../types/CardType';
 
 const ReqCard = ({ username, menuName, quantity, moreInfo }: ReqCardProps) => {
     return (

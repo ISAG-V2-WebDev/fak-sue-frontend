@@ -1,22 +1,10 @@
+import { useState } from 'react';
 import cardWallpaper from '../assets/food-wallpaper.jpg';
 import user from '../assets/user.png';
-import { cardInfoProps } from './FakForm';
-
-export type CardProps = {
-    getCardInfo: (info: cardInfoProps) => void;
-    remainOfQuantity: (rest: number) => void;
-    getIndexOfCard: (index: number) => void;
-    isOrderFull: (allow: boolean) => void;
-    changeFakFormVisibility: (visible: boolean) => void;
-    index: number;
-    restaurantName: string;
-    time: string;
-    description: string;
-    username: string;
-    maxQuantity: number;
-};
+import { CardProps } from '../types/CardType';
 
 const Card = ({
+    id,
     getCardInfo,
     remainOfQuantity,
     getIndexOfCard,
@@ -27,23 +15,25 @@ const Card = ({
     time,
     description,
     username,
+    quantity,
     maxQuantity
 }: CardProps) => {
-    const reqCardDataFromLocalStorage = localStorage.getItem('reqCardData');
-    const reqCardData = reqCardDataFromLocalStorage
-        ? JSON.parse(reqCardDataFromLocalStorage)
-        : [];
+    // const reqCardDataFromLocalStorage = localStorage.getItem('reqCardData');
+    // const reqCardData = reqCardDataFromLocalStorage
+    //     ? JSON.parse(reqCardDataFromLocalStorage)
+    //     : [];
 
     // const totalQuantity = reqCardData.reduce((acc : number, curr: {quantity : number} ) => acc + curr.quantity, 0)
-    const totalQuantity = reqCardData.reduce(
-        (acc: number, curr: { indexOfCard: number; quantity: number }) => {
-            if (curr.indexOfCard === index) {
-                return acc + curr.quantity;
-            }
-            return acc;
-        },
-        0
-    );
+    // const totalQuantity = reqCardData.reduce(
+    //     (acc: number, curr: { indexOfCard: number; quantity: number }) => {
+    //         if (curr.indexOfCard === index) {
+    //             return acc + curr.quantity;
+    //         }
+    //         return acc;
+    //     },
+    //     0
+    // );
+    const totalQuantity = quantity
 
     const changeIsOrderFull = () => {
         if (totalQuantity >= maxQuantity) {
@@ -98,7 +88,7 @@ const Card = ({
                             changeIsOrderFull();
                             getIndexOfCard(index);
                             remainOfQuantity(maxQuantity - totalQuantity);
-                            getCardInfo({ username, restaurantName, time });
+                            getCardInfo({ username, restaurantName, time, id });
                         }}>
                         ฝากซื้อ
                     </button>
