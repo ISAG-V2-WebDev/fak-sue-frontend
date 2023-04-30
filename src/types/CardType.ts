@@ -17,6 +17,7 @@ export type CardProps = {
     time: string;
     description: string;
     username: string;
+    loginUsername: string;
     quantity: number;
     maxQuantity: number;
 };

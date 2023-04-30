@@ -24,8 +24,7 @@ const CardsPage = () => {
             try {
                 const { data: res } = await axios.get(`/api/User/profile`);
                 setProfile(res);
-            } catch (err) {
-            }
+            } catch (err) {}
         }
     };
     useEffect(() => {
@@ -38,8 +37,7 @@ const CardsPage = () => {
             try {
                 const { data: res } = await axios.get(`/api/Blog/list`);
                 setBlogsData(res);
-            } catch (err) {
-            }
+            } catch (err) {}
         }
     };
 
@@ -81,55 +79,31 @@ const CardsPage = () => {
     const cardsReal =
         blogsData && profile ? (
             <>
-                {blogsData.blogs
-                    .filter((blog: Blog): boolean => {
-                        return blog.author.username != profile.username;
-                    })
-                    .map((blog: Blog, index: number) => {
-                        let quan: number = 0;
-                        blog.orders.forEach((order) => {
-                            quan += order.quantity;
-                        });
-                        return (
-                            <Card
-                                key={blog.blog_id}
-                                id={blog.blog_id}
-                                getCardInfo={getCardInfo}
-                                remainOfQuantity={remainOfQuantity}
-                                getIndexOfCard={getIndexOfCard}
-                                isOrderFull={isOrderFull}
-                                changeFakFormVisibility={
-                                    changeFakFormVisibility
-                                }
-                                index={index}
-                                restaurantName={blog.topic}
-                                time={blog.time}
-                                description={blog.content}
-                                username={blog.author.username}
-                                quantity={quan}
-                                maxQuantity={blog.max_order}
-                            />
-                        );
-                    })}
-                {blogsData.blogs
-                    .filter((blog: Blog): boolean => {
-                        return blog.author.username == profile.username;
-                    })
-                    .map((blog: Blog, index: number) => {
-                        let quan: number = 0;
-                        blog.orders.forEach((order) => {
-                            quan += order.quantity;
-                        });
-                        return (
-                            <ReqCard
-                                key={index}
-                                username={blog.author.username}
-                                menuName={blog.topic}
-                                quantity={quan}
-                                moreInfo={blog.content}
-                            />
-                        );
-                    })}
+                {blogsData.blogs.map((blog: Blog, index: number) => {
+                    let quan: number = 0;
+                    blog.orders.forEach((order) => {
+                        quan += order.quantity;
+                    });
+                    return (
+                        <Card
+                            key={blog.blog_id}
+                            id={blog.blog_id}
+                            getCardInfo={getCardInfo}
+                            remainOfQuantity={remainOfQuantity}
+                            getIndexOfCard={getIndexOfCard}
+                            isOrderFull={isOrderFull}
+                            changeFakFormVisibility={changeFakFormVisibility}
+                            index={index}
+                            restaurantName={blog.topic}
+                            time={blog.time}
+                            description={blog.content}
+                            username={blog.author.username}
+                            loginUsername={profile.username}
+                            quantity={quan}
+                            maxQuantity={blog.max_order}
+                        />
+                    );
+                })}
             </>
         ) : (
             <>Loading...</>
