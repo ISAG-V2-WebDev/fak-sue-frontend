@@ -56,6 +56,9 @@ const YourReq = () => {
 
     return (
         <div>
+            <div className="bg-black bg-opacity-40 text-white m-5 rounded-3xl text-center p-5 font-kanit text-4xl">
+                รายการฝากซื้อของคุณ
+            </div>
             <div className="flex gap-4 absolute right-4 top-4">
                 <Link to="/cardspage">
                     <div className=" max-w-[50px] right-20 top-5 w-full cursor-pointer hover:-translate-y-1 transition-transform">

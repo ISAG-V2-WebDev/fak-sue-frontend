@@ -148,7 +148,9 @@ const CardsPage = () => {
                     <img src={logoutBtn} onClick={logout} alt="#" />
                 </div>
             </div>
-
+            <div className="bg-black bg-opacity-40 text-white m-5 rounded-3xl text-center p-5 font-kanit text-4xl">
+                กดฝากได้เลยครับ
+            </div>
             <div className="m-3.5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
                 {cards}
             </div>
