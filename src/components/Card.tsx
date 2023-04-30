@@ -18,21 +18,6 @@ const Card = ({
     quantity,
     maxQuantity
 }: CardProps) => {
-    // const reqCardDataFromLocalStorage = localStorage.getItem('reqCardData');
-    // const reqCardData = reqCardDataFromLocalStorage
-    //     ? JSON.parse(reqCardDataFromLocalStorage)
-    //     : [];
-
-    // const totalQuantity = reqCardData.reduce((acc : number, curr: {quantity : number} ) => acc + curr.quantity, 0)
-    // const totalQuantity = reqCardData.reduce(
-    //     (acc: number, curr: { indexOfCard: number; quantity: number }) => {
-    //         if (curr.indexOfCard === index) {
-    //             return acc + curr.quantity;
-    //         }
-    //         return acc;
-    //     },
-    //     0
-    // );
     const totalQuantity = quantity
 
     const changeIsOrderFull = () => {

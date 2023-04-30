@@ -1,7 +1,6 @@
 import avatar from '../assets/peeps-avatar-alpha.png';
-import { FormLogin, login } from '../services/user.service';
+import { login } from '../services/user.service';
 import { yupResolver } from '@hookform/resolvers/yup';
-import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import * as yup from 'yup';
@@ -86,21 +85,6 @@ const Login = () => {
                                 />
                             </div>
                         </div>
-                        {/* <div className="flex items-center justify-between">
-                            <div className="flex items-center">
-                                <input
-                                    id="remember_me"
-                                    name="remember_me"
-                                    type="checkbox"
-                                    className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
-                                />
-                                <label
-                                    htmlFor="remember_me"
-                                    className="ml-2 block text-sm text-gray-900">
-                                    Remember me
-                                </label>
-                            </div>
-                        </div> */}
                         <div>
                             <button
                                 type="submit"

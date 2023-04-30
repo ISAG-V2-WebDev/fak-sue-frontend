@@ -3,7 +3,6 @@ import { Profile } from '../types/ProfileTypes';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { useEffect, useState } from 'react';
-import { Blogs } from '../types/BlogType';
 
 type RubFakFormProps = {
     changeRubFakFormVisibility: (visible: boolean) => void;
@@ -36,22 +35,6 @@ const RubFakForm = ({ changeRubFakFormVisibility }: RubFakFormProps) => {
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-
-        // Save the submitted data to localStorage
-        // const newData = {
-        //     username: profile?.username,
-        //     restaurantName,
-        //     time,
-        //     description,
-        //     maxQuantity
-        // };
-        // const existingData = JSON.parse(
-        //     localStorage.getItem('cardData') || '[]'
-        // );
-        // localStorage.setItem(
-        //     'cardData',
-        //     JSON.stringify([...existingData, newData])
-        // );
 
         const blogPost = async () => {
             if (token && profile) {

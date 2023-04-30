@@ -7,7 +7,7 @@ import ReqCard from '../components/ReqCard';
 import RubFakForm from '../components/RubFakForm';
 import { logout } from '../services/user.service';
 import { Blog, Blogs } from '../types/BlogType';
-import { CardProps, ReqCardProps, cardInfoProps } from '../types/CardType';
+import { cardInfoProps } from '../types/CardType';
 import { Profile } from '../types/ProfileTypes';
 import axios from 'axios';
 import Cookies from 'js-cookie';
@@ -16,14 +16,6 @@ import { Link } from 'react-router-dom';
 
 const CardsPage = () => {
     const [blogsData, setBlogsData] = useState<Blogs>();
-    const reqCardDataFromLocalStorage = localStorage.getItem('reqCardData');
-    // const reqCardData = reqCardDataFromLocalStorage
-    //     ? JSON.parse(reqCardDataFromLocalStorage)
-    //     : [];
-    // const cardDataFromLocalStorage = localStorage.getItem('cardData');
-    // const cardData = cardDataFromLocalStorage
-    //     ? JSON.parse(cardDataFromLocalStorage)
-    //     : [];
     const [profile, setProfile] = useState<Profile | null>(null);
     const token = Cookies.get('token');
     const profileFetch = async () => {
@@ -31,10 +23,8 @@ const CardsPage = () => {
             axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
             try {
                 const { data: res } = await axios.get(`/api/User/profile`);
-                // return res;
                 setProfile(res);
             } catch (err) {
-                // logout();
             }
         }
     };
@@ -47,11 +37,8 @@ const CardsPage = () => {
             axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
             try {
                 const { data: res } = await axios.get(`/api/Blog/list`);
-                // return res;
-                // console.log(res)
                 setBlogsData(res);
             } catch (err) {
-                // logout();
             }
         }
     };
@@ -90,27 +77,6 @@ const CardsPage = () => {
     const getCardInfo = (info: cardInfoProps) => {
         setCardInfo(info);
     };
-
-    // const cards = cardData
-    //     .filter((card: CardProps): boolean => {
-    //         return profile ? card.username != profile?.username : false;
-    //     })
-    //     .map((card: CardProps, index: number) => (
-    //         <Card
-    //             key={index}
-    //             getCardInfo={getCardInfo}
-    //             remainOfQuantity={remainOfQuantity}
-    //             getIndexOfCard={getIndexOfCard}
-    //             isOrderFull={isOrderFull}
-    //             changeFakFormVisibility={changeFakFormVisibility}
-    //             index={index}
-    //             restaurantName={card.restaurantName}
-    //             time={card.time}
-    //             description={card.description}
-    //             username={card.username}
-    //             maxQuantity={card.maxQuantity}
-    //         />
-    //     ));
 
     const cardsReal =
         blogsData && profile ? (
@@ -178,10 +144,7 @@ const CardsPage = () => {
                             return blog.author.username == profile.username;
                         })
                         .map((blog: Blog) => {
-                            // console.log(blog.orders.length);
                             reqOrderCount += blog.orders.length;
-                            // return blog.orders.length > 0;
-                            // console.log(reqOrderCount);
                         }) && (
                         <Link to="/yourreq">
                             <div className=" max-w-[50px] right-20 top-5 w-full cursor-pointer hover:-translate-y-1 transition-transform">

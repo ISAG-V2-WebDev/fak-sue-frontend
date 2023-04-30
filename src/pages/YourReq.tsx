@@ -3,7 +3,6 @@ import home from '../assets/white-home-icon-png-21.jpg';
 import ReqCard from '../components/ReqCard';
 import { logout } from '../services/user.service';
 import { Blog, Blogs, Order } from '../types/BlogType';
-import { ReqCardProps } from '../types/CardType';
 import { Profile } from '../types/ProfileTypes';
 import axios from 'axios';
 import Cookies from 'js-cookie';
@@ -55,26 +54,6 @@ const YourReq = () => {
     useEffect(() => {
         blogsFetch();
     }, []);
-
-    // const reqCards = reqCardData
-    //     .filter((card: ReqCardProps) => {
-    //         // return profile
-    //         //     ? card.owner ==
-    //         //           JSON.stringify(profile?.username).replaceAll('"', '')
-    //         //     : false;
-    //         return true;
-    //     })
-    //     .map((card: ReqCardProps, index: number) => (
-    //         <ReqCard
-    //             key={index}
-    //             username={card.username}
-    //             // owner={card.owner}
-    //             menuName={card.menuName}
-    //             quantity={card.quantity}
-    //             moreInfo={card.moreInfo}
-    //         />
-    //     ));
-
     const cardsReqReal =
         blogsData && profile ? (
             <>
@@ -103,7 +82,7 @@ const YourReq = () => {
     return (
         <div>
             <div className="bg-black bg-opacity-40 text-white m-5 rounded-3xl text-center p-5 font-kanit text-4xl">
-                รายการฝากซื้อของคุณ
+                รายการคนฝากคุณซื้อ
             </div>
             <div className="flex gap-4 absolute right-4 top-4">
                 <Link to="/cardspage">
