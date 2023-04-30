@@ -3,6 +3,7 @@ import bell from '../assets/bellicon.png';
 import logoutBtn from '../assets/logout-512.png';
 import Card from '../components/Card';
 import FakForm from '../components/FakForm';
+import ReqCard from '../components/ReqCard';
 import RubFakForm from '../components/RubFakForm';
 import { logout } from '../services/user.service';
 import { Blog, Blogs } from '../types/BlogType';
@@ -144,6 +145,25 @@ const CardsPage = () => {
                             />
                         );
                     })}
+                {blogsData.blogs
+                    .filter((blog: Blog): boolean => {
+                        return blog.author.username == profile.username;
+                    })
+                    .map((blog: Blog, index: number) => {
+                        let quan: number = 0;
+                        blog.orders.forEach((order) => {
+                            quan += order.quantity;
+                        });
+                        return (
+                            <ReqCard
+                                key={index}
+                                username={blog.author.username}
+                                menuName={blog.topic}
+                                quantity={quan}
+                                moreInfo={blog.content}
+                            />
+                        );
+                    })}
             </>
         ) : (
             <>Loading...</>
@@ -152,34 +172,6 @@ const CardsPage = () => {
     return (
         <>
             <div className="flex gap-4 absolute right-4 top-4">
-                {/* {reqCardData.filter((card: ReqCardProps) => {
-                    return profile
-                        ? card.owner ==
-                              JSON.stringify(profile?.username).replaceAll(
-                                  '"',
-                                  ''
-                              )
-                        : false;
-                }).length > 0 && (
-                    <Link to="/yourreq">
-                        <div className=" max-w-[50px] right-20 top-5 w-full cursor-pointer hover:-translate-y-1 transition-transform">
-                            <img src={bell} alt="#" />
-
-                            <span className="text-white font-kanit font-bold absolute bg-red-700 w-[25px] rounded-full text-center top-1">
-                                {
-                                    // reqCardData.filter((card: ReqCardProps) => {
-                                    //     return profile
-                                    //         ? card.owner ==
-                                    //               JSON.stringify(
-                                    //                   profile?.username
-                                    //               ).replaceAll('"', '')
-                                    //         : false;
-                                    // }).length
-                                }
-                            </span>
-                        </div>
-                    </Link>
-                )} */}
                 {blogsData && profile ? (
                     blogsData.blogs
                         .filter((blog: Blog) => {
@@ -194,20 +186,11 @@ const CardsPage = () => {
                         <Link to="/yourreq">
                             <div className=" max-w-[50px] right-20 top-5 w-full cursor-pointer hover:-translate-y-1 transition-transform">
                                 <img src={bell} alt="#" />
-
-                                <span className="text-white font-kanit font-bold absolute bg-red-700 w-[25px] rounded-full text-center top-1">
-                                    {
-                                        // reqCardData.filter((card: ReqCardProps) => {
-                                        //     return profile
-                                        //         ? card.owner ==
-                                        //               JSON.stringify(
-                                        //                   profile?.username
-                                        //               ).replaceAll('"', '')
-                                        //         : false;
-                                        // }).length
-                                    }
-                                    {}
-                                </span>
+                                {reqOrderCount > 0 && (
+                                    <span className="text-white font-kanit font-bold absolute bg-red-700 w-[25px] rounded-full text-center top-1">
+                                        {reqOrderCount}
+                                    </span>
+                                )}
                             </div>
                         </Link>
                     )
